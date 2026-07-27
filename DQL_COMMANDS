@@ -1,0 +1,336 @@
+# SQL DQL (Data Query Language)
+
+## 📌 What is DQL?
+
+**DQL (Data Query Language)** is used to **retrieve (read) data** from one or more database tables.
+
+> DQL does not modify data. It is used only to fetch information.
+
+---
+
+# DQL Command
+
+| Command | Purpose |
+|----------|----------|
+| SELECT | Retrieve data from one or more tables |
+
+---
+
+# Student Table
+
+```sql
+CREATE TABLE Student(
+    Id INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Age INT,
+    City VARCHAR(50),
+    Marks INT
+);
+```
+
+---
+
+# Sample Data
+
+```sql
+INSERT INTO Student
+VALUES
+(1,'Rohan',24,'Pune',85),
+(2,'Amit',22,'Mumbai',78),
+(3,'Neha',21,'Delhi',92),
+(4,'Rahul',25,'Pune',68),
+(5,'Priya',23,'Nagpur',88);
+```
+
+---
+
+# 1. SELECT *
+
+Retrieve all columns.
+
+```sql
+SELECT *
+FROM Student;
+```
+
+---
+
+# 2. SELECT Specific Columns
+
+```sql
+SELECT Id, Name
+FROM Student;
+```
+
+---
+
+# 3. WHERE Clause
+
+Retrieve records matching a condition.
+
+```sql
+SELECT *
+FROM Student
+WHERE Age > 22;
+```
+
+---
+
+# 4. DISTINCT
+
+Retrieve unique values.
+
+```sql
+SELECT DISTINCT City
+FROM Student;
+```
+
+---
+
+# 5. ORDER BY
+
+Ascending Order
+
+```sql
+SELECT *
+FROM Student
+ORDER BY Name ASC;
+```
+
+Descending Order
+
+```sql
+SELECT *
+FROM Student
+ORDER BY Marks DESC;
+```
+
+---
+
+# 6. LIMIT (MySQL)
+
+Retrieve first 3 records.
+
+```sql
+SELECT *
+FROM Student
+LIMIT 3;
+```
+
+---
+
+# 7. LIKE
+
+Names starting with 'R'
+
+```sql
+SELECT *
+FROM Student
+WHERE Name LIKE 'R%';
+```
+
+Names ending with 'a'
+
+```sql
+SELECT *
+FROM Student
+WHERE Name LIKE '%a';
+```
+
+Contains 'oh'
+
+```sql
+SELECT *
+FROM Student
+WHERE Name LIKE '%oh%';
+```
+
+---
+
+# 8. BETWEEN
+
+```sql
+SELECT *
+FROM Student
+WHERE Marks BETWEEN 70 AND 90;
+```
+
+---
+
+# 9. IN
+
+```sql
+SELECT *
+FROM Student
+WHERE City IN ('Pune','Mumbai');
+```
+
+---
+
+# 10. NOT IN
+
+```sql
+SELECT *
+FROM Student
+WHERE City NOT IN ('Delhi');
+```
+
+---
+
+# 11. IS NULL
+
+```sql
+SELECT *
+FROM Student
+WHERE City IS NULL;
+```
+
+---
+
+# 12. IS NOT NULL
+
+```sql
+SELECT *
+FROM Student
+WHERE City IS NOT NULL;
+```
+
+---
+
+# 13. Alias (AS)
+
+```sql
+SELECT Name AS StudentName,
+       Marks AS TotalMarks
+FROM Student;
+```
+
+---
+
+# 14. Aggregate Functions
+
+Count
+
+```sql
+SELECT COUNT(*) AS TotalStudents
+FROM Student;
+```
+
+Maximum
+
+```sql
+SELECT MAX(Marks)
+FROM Student;
+```
+
+Minimum
+
+```sql
+SELECT MIN(Marks)
+FROM Student;
+```
+
+Average
+
+```sql
+SELECT AVG(Marks)
+FROM Student;
+```
+
+Sum
+
+```sql
+SELECT SUM(Marks)
+FROM Student;
+```
+
+---
+
+# 15. GROUP BY
+
+```sql
+SELECT City,
+       COUNT(*) AS TotalStudents
+FROM Student
+GROUP BY City;
+```
+
+---
+
+# 16. HAVING
+
+```sql
+SELECT City,
+       COUNT(*) AS TotalStudents
+FROM Student
+GROUP BY City
+HAVING COUNT(*) > 1;
+```
+
+---
+
+# Interview Questions
+
+## What is DQL?
+
+DQL stands for **Data Query Language**. It is used to retrieve data from database tables.
+
+---
+
+## Which command belongs to DQL?
+
+- SELECT
+
+---
+
+## Difference between DQL and DML
+
+| DQL | DML |
+|-----|-----|
+| Used to retrieve data | Used to insert, update and delete data |
+| Uses SELECT | Uses INSERT, UPDATE and DELETE |
+
+---
+
+## Difference between WHERE and HAVING
+
+| WHERE | HAVING |
+|---------|---------|
+| Filters rows | Filters groups |
+| Used before GROUP BY | Used after GROUP BY |
+
+---
+
+## Difference between DISTINCT and GROUP BY
+
+| DISTINCT | GROUP BY |
+|------------|-----------|
+| Removes duplicate values | Groups records for aggregate functions |
+
+---
+
+# Summary
+
+| Command | Purpose |
+|----------|----------|
+| SELECT | Retrieve Data |
+| WHERE | Filter Records |
+| DISTINCT | Remove Duplicates |
+| ORDER BY | Sort Data |
+| LIMIT | Restrict Rows |
+| LIKE | Pattern Matching |
+| BETWEEN | Range Filter |
+| IN | Multiple Values |
+| GROUP BY | Group Records |
+| HAVING | Filter Groups |
+
+---
+
+# Author
+
+**Ruturaj Choure**
+
+.NET Full Stack Developer
+
+GitHub Repository:
+`SQL-DQL-Commands`
