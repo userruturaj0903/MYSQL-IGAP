@@ -1,0 +1,287 @@
+# SQL DDL (Data Definition Language) Commands
+
+## What is DDL?
+
+**DDL (Data Definition Language)** consists of SQL commands used to define and manage the structure of database objects such as tables, databases, indexes, views, and schemas.
+
+> DDL commands modify the database structure, not the data.
+
+---
+
+# DDL Commands
+
+1. CREATE
+2. ALTER
+3. DROP
+4. TRUNCATE
+5. RENAME
+
+---
+
+# 1. CREATE
+
+## Definition
+
+The **CREATE** command is used to create new database objects such as:
+
+- Database
+- Table
+- View
+- Index
+- Schema
+
+## Syntax
+
+```sql
+CREATE TABLE Employee
+(
+    EmpID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Salary DECIMAL(10,2)
+);
+```
+
+## Example
+
+```sql
+CREATE TABLE Employee
+(
+    EmpID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Department VARCHAR(30),
+    Salary DECIMAL(10,2)
+);
+```
+
+## Output
+
+A new table named **Employee** is created.
+
+---
+
+# 2. ALTER
+
+## Definition
+
+The **ALTER** command is used to modify the structure of an existing table.
+
+It can:
+
+- Add a column
+- Remove a column
+- Modify a column
+- Rename a column
+- Add constraints
+
+## Syntax
+
+```sql
+ALTER TABLE Employee
+ADD Department VARCHAR(30);
+```
+
+## Example
+
+### Add Column
+
+```sql
+ALTER TABLE Employee
+ADD Email VARCHAR(100);
+```
+
+### Modify Column
+
+```sql
+ALTER TABLE Employee
+ALTER COLUMN Name VARCHAR(100);
+```
+
+### Drop Column
+
+```sql
+ALTER TABLE Employee
+DROP COLUMN Email;
+```
+
+---
+
+# 3. DROP
+
+## Definition
+
+The **DROP** command permanently removes an entire database object.
+
+Once dropped:
+
+- Structure is deleted
+- Data is deleted
+- Cannot be rolled back (in most databases)
+
+## Syntax
+
+```sql
+DROP TABLE Employee;
+```
+
+## Example
+
+```sql
+DROP TABLE Employee;
+```
+
+---
+
+# 4. TRUNCATE
+
+## Definition
+
+The **TRUNCATE** command removes all rows from a table while keeping its structure.
+
+- Faster than DELETE
+- Cannot use WHERE clause
+- Resets Identity (in SQL Server)
+
+## Syntax
+
+```sql
+TRUNCATE TABLE Employee;
+```
+
+## Example
+
+Before
+
+| EmpID | Name |
+|------|------|
+|1|John|
+|2|Sam|
+|3|David|
+
+Command
+
+```sql
+TRUNCATE TABLE Employee;
+```
+
+After
+
+Table exists but contains **0 rows**.
+
+---
+
+# 5. RENAME
+
+## Definition
+
+The **RENAME** command changes the name of an existing database object.
+
+## Syntax
+
+```sql
+ALTER TABLE Employee
+RENAME TO Staff;
+```
+
+or
+
+```sql
+RENAME TABLE Employee TO Staff;
+```
+
+(SQL syntax varies depending on the database.)
+
+---
+
+# Difference Between DELETE, TRUNCATE and DROP
+
+| Feature | DELETE | TRUNCATE | DROP |
+|----------|----------|------------|---------|
+|Command Type|DML|DDL|DDL|
+|Removes Data|Yes|Yes|Yes|
+|Removes Structure|No|No|Yes|
+|WHERE Clause|Yes|No|No|
+|Rollback|Yes (Transaction)|Usually No|Usually No|
+|Identity Reset|No|Yes|N/A|
+|Speed|Slow|Fastest|Fast|
+
+---
+
+# Interview Questions
+
+## Q1. What is DDL?
+
+DDL (Data Definition Language) is used to define and manage the structure of database objects like tables, views, indexes, and schemas.
+
+---
+
+## Q2. Name all DDL commands.
+
+- CREATE
+- ALTER
+- DROP
+- TRUNCATE
+- RENAME
+
+---
+
+## Q3. Difference between DELETE and TRUNCATE?
+
+| DELETE | TRUNCATE |
+|----------|------------|
+|DML|DDL|
+|Can use WHERE|Cannot use WHERE|
+|Deletes selected rows|Deletes all rows|
+|Slower|Faster|
+|Doesn't reset Identity|Resets Identity|
+
+---
+
+## Q4. Difference between DROP and TRUNCATE?
+
+| DROP | TRUNCATE |
+|--------|------------|
+|Deletes table completely|Deletes only data|
+|Structure removed|Structure remains|
+|Cannot recover easily|Table still exists|
+
+---
+
+# Quick Revision
+
+| Command | Purpose |
+|----------|----------|
+|CREATE|Create a new object|
+|ALTER|Modify existing object|
+|DROP|Delete object completely|
+|TRUNCATE|Delete all records only|
+|RENAME|Rename database object|
+
+---
+
+# Memory Trick
+
+**CATDR**
+
+- **C** → CREATE
+- **A** → ALTER
+- **T** → TRUNCATE
+- **D** → DROP
+- **R** → RENAME
+
+---
+
+# Key Points
+
+- DDL changes database structure.
+- Auto-commits in most databases.
+- Cannot usually be rolled back.
+- TRUNCATE is faster than DELETE.
+- DROP removes both structure and data.
+- ALTER modifies an existing table.
+- CREATE creates new database objects.
+
+---
+
+# One-Line Summary
+
+**DDL commands define and modify the database structure rather than manipulating the data stored inside the tables.**
