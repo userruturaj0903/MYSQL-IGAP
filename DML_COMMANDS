@@ -1,0 +1,285 @@
+# SQL DML (Data Manipulation Language)
+
+## 📌 What is DML?
+
+**DML (Data Manipulation Language)** is used to **insert, update, delete, and retrieve data** from database tables.
+
+> DML commands work on the data stored inside the table, not on the table structure.
+
+---
+
+# DML Commands
+
+| Command | Purpose |
+|----------|----------|
+| SELECT | Retrieve data from a table |
+| INSERT | Insert new records |
+| UPDATE | Modify existing records |
+| DELETE | Delete records from a table |
+
+---
+
+# 1. SELECT
+
+## Syntax
+
+```sql
+SELECT column_name
+FROM table_name;
+```
+
+## Example
+
+```sql
+SELECT *
+FROM Student;
+```
+
+### Output
+
+Displays all records from the Student table.
+
+---
+
+# SELECT Specific Columns
+
+```sql
+SELECT Id, Name
+FROM Student;
+```
+
+---
+
+# SELECT with WHERE
+
+```sql
+SELECT *
+FROM Student
+WHERE Age > 20;
+```
+
+---
+
+# SELECT with ORDER BY
+
+```sql
+SELECT *
+FROM Student
+ORDER BY Name ASC;
+```
+
+---
+
+# SELECT DISTINCT
+
+```sql
+SELECT DISTINCT City
+FROM Student;
+```
+
+---
+
+# 2. INSERT
+
+## Syntax
+
+```sql
+INSERT INTO table_name(column1,column2,column3)
+VALUES(value1,value2,value3);
+```
+
+## Example
+
+```sql
+INSERT INTO Student(Id,Name,Age,City)
+VALUES(1,'Rohan',24,'Pune');
+```
+
+---
+
+# Insert Multiple Rows
+
+```sql
+INSERT INTO Student(Name,Age,City)
+VALUES
+('Amit',22,'Mumbai'),
+('Neha',21,'Delhi'),
+('Rahul',25,'Pune');
+```
+
+---
+
+# 3. UPDATE
+
+## Syntax
+
+```sql
+UPDATE table_name
+SET column_name = value
+WHERE condition;
+```
+
+## Example
+
+```sql
+UPDATE Student
+SET Age = 23
+WHERE Id = 1;
+```
+
+---
+
+# Update Multiple Columns
+
+```sql
+UPDATE Student
+SET Age = 24,
+    City = 'Nagpur'
+WHERE Id = 2;
+```
+
+---
+
+# Update All Records
+
+```sql
+UPDATE Student
+SET City = 'Pune';
+```
+
+> ⚠️ Without WHERE, all rows are updated.
+
+---
+
+# 4. DELETE
+
+## Syntax
+
+```sql
+DELETE FROM table_name
+WHERE condition;
+```
+
+## Example
+
+```sql
+DELETE FROM Student
+WHERE Id = 5;
+```
+
+---
+
+# Delete All Records
+
+```sql
+DELETE FROM Student;
+```
+
+> Table structure remains. Only data is deleted.
+
+---
+
+# WHERE Clause
+
+```sql
+SELECT *
+FROM Student
+WHERE Age >= 18;
+```
+
+---
+
+# ORDER BY
+
+Ascending
+
+```sql
+SELECT *
+FROM Student
+ORDER BY Name ASC;
+```
+
+Descending
+
+```sql
+SELECT *
+FROM Student
+ORDER BY Name DESC;
+```
+
+---
+
+# DISTINCT
+
+```sql
+SELECT DISTINCT City
+FROM Student;
+```
+
+---
+
+# LIMIT (MySQL)
+
+```sql
+SELECT *
+FROM Student
+LIMIT 5;
+```
+
+---
+
+# Interview Questions
+
+## What is DML?
+
+DML stands for **Data Manipulation Language**. It is used to manipulate data stored inside database tables.
+
+---
+
+## Which commands belong to DML?
+
+- SELECT
+- INSERT
+- UPDATE
+- DELETE
+
+---
+
+## Difference between DELETE and TRUNCATE
+
+| DELETE | TRUNCATE |
+|----------|-----------|
+| DML | DDL |
+| Can use WHERE | Cannot use WHERE |
+| Deletes selected rows | Deletes all rows |
+| Can rollback (depending on DB/transaction) | Usually cannot rollback |
+
+---
+
+## Difference between INSERT and UPDATE
+
+| INSERT | UPDATE |
+|----------|----------|
+| Adds new record | Modifies existing record |
+
+---
+
+# Summary
+
+| Command | Purpose |
+|----------|----------|
+| SELECT | Read Data |
+| INSERT | Add Data |
+| UPDATE | Modify Data |
+| DELETE | Remove Data |
+
+---
+
+# Author
+
+**Ruturaj Choure**
+
+.NET Full Stack Developer
+
+GitHub Repository:
+`SQL-DML-Commands`
