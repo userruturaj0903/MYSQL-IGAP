@@ -1,0 +1,376 @@
+# SQL Constraints
+
+## 📌 What are SQL Constraints?
+
+**SQL Constraints** are rules applied to table columns to ensure the **accuracy, consistency, and integrity** of data.
+
+They prevent invalid data from being inserted into a table.
+
+---
+
+# Types of SQL Constraints
+
+| Constraint | Description |
+|------------|-------------|
+| NOT NULL | Prevents NULL values |
+| UNIQUE | Prevents duplicate values |
+| PRIMARY KEY | Uniquely identifies each record |
+| FOREIGN KEY | Creates relationship between tables |
+| CHECK | Restricts values based on a condition |
+| DEFAULT | Assigns a default value |
+| AUTO_INCREMENT | Automatically generates unique numbers (MySQL) |
+
+---
+
+# Student Table
+
+```sql
+CREATE TABLE Student
+(
+    Id INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Age INT,
+    City VARCHAR(50)
+);
+```
+
+---
+
+# 1. NOT NULL Constraint
+
+## Definition
+
+The **NOT NULL** constraint ensures that a column cannot contain NULL values.
+
+## Syntax
+
+```sql
+CREATE TABLE Student
+(
+    Id INT,
+    Name VARCHAR(50) NOT NULL
+);
+```
+
+## Example
+
+```sql
+INSERT INTO Student(Id)
+VALUES(1);
+```
+
+❌ Error because Name cannot be NULL.
+
+---
+
+# 2. UNIQUE Constraint
+
+## Definition
+
+The **UNIQUE** constraint ensures that duplicate values are not allowed.
+
+## Syntax
+
+```sql
+CREATE TABLE Employee
+(
+    Id INT,
+    Email VARCHAR(100) UNIQUE
+);
+```
+
+## Example
+
+```sql
+INSERT INTO Employee
+VALUES(1,'abc@gmail.com');
+
+INSERT INTO Employee
+VALUES(2,'abc@gmail.com');
+```
+
+❌ Error because Email must be unique.
+
+---
+
+# 3. PRIMARY KEY Constraint
+
+## Definition
+
+A **PRIMARY KEY** uniquely identifies each record.
+
+Properties:
+- Cannot contain NULL values
+- Cannot contain duplicate values
+- Only one Primary Key per table
+
+## Syntax
+
+```sql
+CREATE TABLE Student
+(
+    Id INT PRIMARY KEY,
+    Name VARCHAR(50)
+);
+```
+
+---
+
+# 4. FOREIGN KEY Constraint
+
+## Definition
+
+A **FOREIGN KEY** creates a relationship between two tables.
+
+## Parent Table
+
+```sql
+CREATE TABLE Department
+(
+    DepartmentId INT PRIMARY KEY,
+    DepartmentName VARCHAR(50)
+);
+```
+
+## Child Table
+
+```sql
+CREATE TABLE Employee
+(
+    EmployeeId INT PRIMARY KEY,
+    EmployeeName VARCHAR(50),
+    DepartmentId INT,
+    FOREIGN KEY (DepartmentId)
+    REFERENCES Department(DepartmentId)
+);
+```
+
+---
+
+# 5. CHECK Constraint
+
+## Definition
+
+The **CHECK** constraint restricts the values that can be stored.
+
+## Syntax
+
+```sql
+CREATE TABLE Student
+(
+    Id INT PRIMARY KEY,
+    Age INT CHECK (Age >= 18)
+);
+```
+
+## Example
+
+```sql
+INSERT INTO Student
+VALUES(1,16);
+```
+
+❌ Error because Age must be at least 18.
+
+---
+
+# 6. DEFAULT Constraint
+
+## Definition
+
+The **DEFAULT** constraint assigns a default value when no value is provided.
+
+## Syntax
+
+```sql
+CREATE TABLE Student
+(
+    Id INT PRIMARY KEY,
+    City VARCHAR(50) DEFAULT 'Pune'
+);
+```
+
+## Example
+
+```sql
+INSERT INTO Student(Id)
+VALUES(1);
+```
+
+### Output
+
+| Id | City |
+|----|------|
+| 1 | Pune |
+
+---
+
+# 7. AUTO_INCREMENT (MySQL)
+
+## Definition
+
+Automatically generates unique numbers.
+
+## Syntax
+
+```sql
+CREATE TABLE Student
+(
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(50)
+);
+```
+
+---
+
+# Add Constraint using ALTER TABLE
+
+## Add Primary Key
+
+```sql
+ALTER TABLE Student
+ADD PRIMARY KEY(Id);
+```
+
+---
+
+## Add Foreign Key
+
+```sql
+ALTER TABLE Employee
+ADD CONSTRAINT FK_Department
+FOREIGN KEY (DepartmentId)
+REFERENCES Department(DepartmentId);
+```
+
+---
+
+## Add Unique Constraint
+
+```sql
+ALTER TABLE Student
+ADD CONSTRAINT UQ_Email
+UNIQUE(Email);
+```
+
+---
+
+## Add Default Constraint
+
+```sql
+ALTER TABLE Student
+ALTER City
+SET DEFAULT 'Mumbai';
+```
+
+---
+
+# Drop Constraints
+
+## Drop Primary Key (MySQL)
+
+```sql
+ALTER TABLE Student
+DROP PRIMARY KEY;
+```
+
+---
+
+## Drop Foreign Key
+
+```sql
+ALTER TABLE Employee
+DROP FOREIGN KEY FK_Department;
+```
+
+---
+
+## Drop Unique Constraint
+
+```sql
+ALTER TABLE Student
+DROP INDEX UQ_Email;
+```
+
+---
+
+# Interview Questions
+
+## What is a Constraint?
+
+A constraint is a rule that ensures valid and consistent data is stored in a database.
+
+---
+
+## Difference between PRIMARY KEY and UNIQUE
+
+| PRIMARY KEY | UNIQUE |
+|--------------|---------|
+| Cannot contain NULL | Allows one NULL (MySQL) |
+| No duplicate values | No duplicate values |
+| Only one per table | Multiple UNIQUE constraints allowed |
+
+---
+
+## Difference between PRIMARY KEY and FOREIGN KEY
+
+| PRIMARY KEY | FOREIGN KEY |
+|--------------|-------------|
+| Uniquely identifies records | Creates relationship between tables |
+| Cannot be NULL | Can be NULL (unless restricted) |
+| One per table | Multiple allowed |
+
+---
+
+## Difference between NOT NULL and CHECK
+
+| NOT NULL | CHECK |
+|-----------|--------|
+| Prevents NULL values | Restricts values using a condition |
+
+---
+
+## Which Constraints are Most Asked in Interviews?
+
+- PRIMARY KEY
+- FOREIGN KEY
+- UNIQUE
+- NOT NULL
+- CHECK
+- DEFAULT
+
+---
+
+# Summary
+
+| Constraint | Purpose |
+|------------|---------|
+| NOT NULL | Prevent NULL values |
+| UNIQUE | Prevent duplicate values |
+| PRIMARY KEY | Unique identifier |
+| FOREIGN KEY | Create table relationship |
+| CHECK | Restrict values |
+| DEFAULT | Assign default value |
+| AUTO_INCREMENT | Auto-generate IDs |
+
+---
+
+# Repository Structure
+
+```
+SQL-Constraints/
+│── README.md
+│── Student_Table.sql
+│── Constraints_Practice.sql
+│── Interview_Questions.sql
+```
+
+---
+
+# Author
+
+**Ruturaj Choure**
+
+.NET Full Stack Developer
+
+⭐ If this repository helped you, don't forget to **Star** it.
