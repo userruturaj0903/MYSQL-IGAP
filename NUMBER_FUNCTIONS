@@ -1,0 +1,419 @@
+# SQL Number Functions
+
+## 📌 What are Number Functions?
+
+**Number Functions** are built-in SQL functions used to perform mathematical operations on numeric values.
+
+These functions help in calculations, rounding, finding absolute values, powers, square roots, and more.
+
+---
+
+# Common SQL Number Functions
+
+| Function | Description |
+|----------|-------------|
+| ABS() | Returns the absolute value |
+| CEIL() / CEILING() | Rounds up to the nearest integer |
+| FLOOR() | Rounds down to the nearest integer |
+| ROUND() | Rounds a number |
+| TRUNCATE() | Truncates decimal places |
+| MOD() | Returns remainder |
+| POWER() | Returns a number raised to a power |
+| SQRT() | Returns square root |
+| RAND() | Generates a random number |
+| SIGN() | Returns sign of a number |
+
+---
+
+# Sample Table
+
+```sql
+CREATE TABLE Employee
+(
+    Id INT,
+    Name VARCHAR(50),
+    Salary DECIMAL(10,2)
+);
+```
+
+```sql
+INSERT INTO Employee
+VALUES
+(1,'Rohan',45000.75),
+(2,'Amit',52000.20),
+(3,'Neha',38000.95);
+```
+
+---
+
+# 1. ABS()
+
+## Definition
+
+Returns the positive (absolute) value of a number.
+
+## Syntax
+
+```sql
+SELECT ABS(number);
+```
+
+## Example
+
+```sql
+SELECT ABS(-25);
+```
+
+### Output
+
+```
+25
+```
+
+---
+
+# 2. CEIL() / CEILING()
+
+## Definition
+
+Rounds a number up to the nearest integer.
+
+## Syntax
+
+```sql
+SELECT CEIL(number);
+```
+
+## Example
+
+```sql
+SELECT CEIL(25.10);
+```
+
+### Output
+
+```
+26
+```
+
+---
+
+# 3. FLOOR()
+
+## Definition
+
+Rounds a number down to the nearest integer.
+
+## Syntax
+
+```sql
+SELECT FLOOR(25.99);
+```
+
+### Output
+
+```
+25
+```
+
+---
+
+# 4. ROUND()
+
+## Definition
+
+Rounds a number to the specified decimal places.
+
+## Syntax
+
+```sql
+SELECT ROUND(number, decimal_places);
+```
+
+## Example
+
+```sql
+SELECT ROUND(25.6789,2);
+```
+
+### Output
+
+```
+25.68
+```
+
+---
+
+# 5. TRUNCATE()
+
+## Definition
+
+Removes decimal places without rounding.
+
+## Syntax (MySQL)
+
+```sql
+SELECT TRUNCATE(number, decimal_places);
+```
+
+## Example
+
+```sql
+SELECT TRUNCATE(25.6789,2);
+```
+
+### Output
+
+```
+25.67
+```
+
+---
+
+# 6. MOD()
+
+## Definition
+
+Returns the remainder after division.
+
+## Syntax
+
+```sql
+SELECT MOD(number1, number2);
+```
+
+## Example
+
+```sql
+SELECT MOD(10,3);
+```
+
+### Output
+
+```
+1
+```
+
+---
+
+# 7. POWER()
+
+## Definition
+
+Returns a number raised to a specified power.
+
+## Syntax
+
+```sql
+SELECT POWER(number, power);
+```
+
+## Example
+
+```sql
+SELECT POWER(5,2);
+```
+
+### Output
+
+```
+25
+```
+
+---
+
+# 8. SQRT()
+
+## Definition
+
+Returns the square root of a number.
+
+## Syntax
+
+```sql
+SELECT SQRT(number);
+```
+
+## Example
+
+```sql
+SELECT SQRT(64);
+```
+
+### Output
+
+```
+8
+```
+
+---
+
+# 9. RAND()
+
+## Definition
+
+Generates a random number between 0 and 1.
+
+## Syntax
+
+```sql
+SELECT RAND();
+```
+
+### Example Output
+
+```
+0.483921
+```
+
+---
+
+# 10. SIGN()
+
+## Definition
+
+Returns the sign of a number.
+
+- 1 → Positive
+- -1 → Negative
+- 0 → Zero
+
+## Syntax
+
+```sql
+SELECT SIGN(number);
+```
+
+## Example
+
+```sql
+SELECT SIGN(-100);
+```
+
+### Output
+
+```
+-1
+```
+
+---
+
+# Using Number Functions with Table Data
+
+Round Salary
+
+```sql
+SELECT Name,
+       ROUND(Salary,0) AS RoundedSalary
+FROM Employee;
+```
+
+---
+
+Calculate Square Root
+
+```sql
+SELECT SQRT(81);
+```
+
+---
+
+Calculate Power
+
+```sql
+SELECT POWER(10,3);
+```
+
+---
+
+Find Remainder
+
+```sql
+SELECT MOD(17,5);
+```
+
+---
+
+Generate Random Number
+
+```sql
+SELECT RAND();
+```
+
+---
+
+# Interview Questions
+
+## What are Number Functions?
+
+Number functions are built-in SQL functions used to perform mathematical calculations on numeric values.
+
+---
+
+## Difference between ROUND() and TRUNCATE()
+
+| ROUND() | TRUNCATE() |
+|-----------|------------|
+| Rounds value | Removes decimals |
+| May increase value | Never rounds |
+
+Example
+
+```sql
+ROUND(25.678,2)      → 25.68
+TRUNCATE(25.678,2)   → 25.67
+```
+
+---
+
+## Difference between CEIL() and FLOOR()
+
+| CEIL() | FLOOR() |
+|----------|-----------|
+| Rounds Up | Rounds Down |
+
+Example
+
+```sql
+CEIL(15.2)  → 16
+FLOOR(15.9) → 15
+```
+
+---
+
+# Summary
+
+| Function | Example | Result |
+|----------|----------|--------|
+| ABS() | ABS(-20) | 20 |
+| CEIL() | CEIL(12.2) | 13 |
+| FLOOR() | FLOOR(12.9) | 12 |
+| ROUND() | ROUND(12.567,2) | 12.57 |
+| TRUNCATE() | TRUNCATE(12.567,2) | 12.56 |
+| MOD() | MOD(10,3) | 1 |
+| POWER() | POWER(2,3) | 8 |
+| SQRT() | SQRT(64) | 8 |
+| RAND() | RAND() | Random Value |
+| SIGN() | SIGN(-5) | -1 |
+
+---
+
+# Repository Structure
+
+```
+SQL-Number-Functions/
+│── README.md
+│── Number_Functions.sql
+│── Practice_Queries.sql
+│── Interview_Questions.sql
+```
+
+---
+
+# Author
+
+**Ruturaj Choure**
+
+.NET Full Stack Developer
+
+⭐ Star this repository if you found it helpful.
