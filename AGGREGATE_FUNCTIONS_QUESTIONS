@@ -1,0 +1,385 @@
+COUNT() - 10 Questions with Answers
+
+1. Find the total number of students.
+SELECT COUNT(*) AS TotalStudents
+FROM Student;
+
+2. Count the number of students from Pune.
+SELECT COUNT(*) AS PuneStudents
+FROM Student
+WHERE City = 'Pune';
+
+3. Count the number of students in each city.
+SELECT City,
+       COUNT(*) AS TotalStudents
+FROM Student
+GROUP BY City;
+
+4. Count the number of students whose score is greater than 80.
+SELECT COUNT(*) AS StudentsAbove80
+FROM Student
+WHERE Score > 80;
+
+5. Count the number of students whose score is between 70 and 90.
+SELECT COUNT(*) AS Students
+FROM Student
+WHERE Score BETWEEN 70 AND 90;
+6. Count the number of distinct cities.
+SELECT COUNT(DISTINCT City) AS TotalCities
+FROM Student;
+
+7. Count students in each city having more than 3 students.
+SELECT City,
+       COUNT(*) AS TotalStudents
+FROM Student
+GROUP BY City
+HAVING COUNT(*) > 3;
+
+8. Count the number of students whose name starts with 'R'.
+SELECT COUNT(*) AS TotalStudents
+FROM Student
+WHERE Name LIKE 'R%';
+
+9. Count students whose score is less than the average score.
+SELECT COUNT(*) AS TotalStudents
+FROM Student
+WHERE Score <
+(
+    SELECT AVG(Score)
+    FROM Student
+);
+
+10. Count students in each city whose average score is greater than 85.
+SELECT City,
+       COUNT(*) AS TotalStudents
+FROM Student
+GROUP BY City
+HAVING AVG(Score) > 85;
+
+
+
+SUM() - 10 Questions with Answers
+
+1. Find the total score of all students.
+SELECT SUM(Score) AS TotalScore
+FROM Student;
+
+2. Find the total score of Pune students.
+SELECT SUM(Score) AS TotalScore
+FROM Student
+WHERE City = 'Pune';
+
+3. Find the total score of each city.
+SELECT City,
+       SUM(Score) AS TotalScore
+FROM Student
+GROUP BY City;
+
+4. Find the total score of students scoring above 80.
+SELECT SUM(Score) AS TotalScore
+FROM Student
+WHERE Score > 80;
+
+5. Find the total score of students scoring below 75.
+SELECT SUM(Score) AS TotalScore
+FROM Student
+WHERE Score < 75;
+
+6. Find the total score of Mumbai students.
+SELECT SUM(Score) AS TotalScore
+FROM Student
+WHERE City = 'Mumbai';
+
+7. Find the total score for each city where total score is greater than 250.
+SELECT City,
+       SUM(Score) AS TotalScore
+FROM Student
+GROUP BY City
+HAVING SUM(Score) > 250;
+
+8. Find the total score of students whose names start with 'A'.
+SELECT SUM(Score) AS TotalScore
+FROM Student
+WHERE Name LIKE 'A%';
+
+9. Find the total score of students between 70 and 90 marks.
+SELECT SUM(Score) AS TotalScore
+FROM Student
+WHERE Score BETWEEN 70 AND 90;
+
+
+10. Find the city having the highest total score.
+SELECT City,
+       SUM(Score) AS TotalScore
+FROM Student
+GROUP BY City
+ORDER BY TotalScore DESC
+LIMIT 1;
+
+
+
+AVG() – 10 Interview Questions + Answers
+
+1. Find the average score of all students.
+SELECT AVG(Score) AS AverageScore
+FROM Student;
+
+2. Find the average score of students from Pune.
+SELECT AVG(Score) AS AverageScore
+FROM Student
+WHERE City = 'Pune';
+
+3. Find the average score of students from Mumbai.
+SELECT AVG(Score) AS AverageScore
+FROM Student
+WHERE City = 'Mumbai';
+
+4. Find the average score of students in each city.
+SELECT City,
+       AVG(Score) AS AverageScore
+FROM Student
+GROUP BY City;
+
+5. Find the average score of students whose score is greater than 80.
+SELECT AVG(Score) AS AverageScore
+FROM Student
+WHERE Score > 80;
+
+6. Find the average score of students whose score is between 70 and 90.
+SELECT AVG(Score) AS AverageScore
+FROM Student
+WHERE Score BETWEEN 70 AND 90;
+
+7. Display cities whose average score is greater than 85.
+SELECT City,
+       AVG(Score) AS AverageScore
+FROM Student
+GROUP BY City
+HAVING AVG(Score) > 85;
+8. Find the average score of students whose names start with 'A'.
+SELECT AVG(Score) AS AverageScore
+FROM Student
+WHERE Name LIKE 'A%';
+
+9. Find the city having the highest average score.
+SELECT City,
+       AVG(Score) AS AverageScore
+FROM Student
+GROUP BY City
+ORDER BY AverageScore DESC
+LIMIT 1;
+
+10. Find the average score of students whose score is less than the overall average score.
+SELECT AVG(Score) AS AverageScore
+FROM Student
+WHERE Score <
+(
+    SELECT AVG(Score)
+    FROM Student
+);
+
+
+
+
+
+MAX() – 10 Interview Questions + Answers
+
+1. Find the highest score of all students.
+SELECT MAX(Score) AS HighestScore
+FROM Student;
+
+2. Find the highest score of students from Pune.
+SELECT MAX(Score) AS HighestScore
+FROM Student
+WHERE City = 'Pune';
+
+3. Find the highest score of students from Mumbai.
+SELECT MAX(Score) AS HighestScore
+FROM Student
+WHERE City = 'Mumbai';
+
+4. Find the highest score in each city.
+SELECT City,
+       MAX(Score) AS HighestScore
+FROM Student
+GROUP BY City;
+
+5. Find the highest score of students whose score is greater than 80.
+SELECT MAX(Score) AS HighestScore
+FROM Student
+WHERE Score > 80;
+
+6. Find the highest score of students whose score is between 70 and 90.
+SELECT MAX(Score) AS HighestScore
+FROM Student
+WHERE Score BETWEEN 70 AND 90;
+
+7. Display cities whose highest score is greater than 90.
+SELECT City,
+       MAX(Score) AS HighestScore
+FROM Student
+GROUP BY City
+HAVING MAX(Score) > 90;
+
+8. Find the highest score of students whose names start with 'A'.
+SELECT MAX(Score) AS HighestScore
+FROM Student
+WHERE Name LIKE 'A%';
+
+9. Find the city having the highest score.
+SELECT City,
+       MAX(Score) AS HighestScore
+FROM Student
+GROUP BY City
+ORDER BY HighestScore DESC
+LIMIT 1;
+
+10. Find the highest score of students whose score is less than the overall highest score.
+SELECT MAX(Score) AS HighestScore
+FROM Student
+WHERE Score <
+(
+    SELECT MAX(Score)
+    FROM Student
+);
+
+
+
+
+
+MIN() – 10 Interview Questions + Answers
+
+1. Find the lowest score of all students.
+SELECT MIN(Score) AS LowestScore
+FROM Student;
+
+2. Find the lowest score of students from Pune.
+SELECT MIN(Score) AS LowestScore
+FROM Student
+WHERE City = 'Pune';
+
+3. Find the lowest score of students from Mumbai.
+SELECT MIN(Score) AS LowestScore
+FROM Student
+WHERE City = 'Mumbai';
+
+4. Find the lowest score in each city.
+SELECT City,
+       MIN(Score) AS LowestScore
+FROM Student
+GROUP BY City;
+
+5. Find the lowest score of students whose score is greater than 80.
+SELECT MIN(Score) AS LowestScore
+FROM Student
+WHERE Score > 80;
+
+6. Find the lowest score of students whose score is between 70 and 90.
+SELECT MIN(Score) AS LowestScore
+FROM Student
+WHERE Score BETWEEN 70 AND 90;
+
+7. Display cities whose lowest score is greater than 75.
+SELECT City,
+       MIN(Score) AS LowestScore
+FROM Student
+GROUP BY City
+HAVING MIN(Score) > 75;
+
+8. Find the lowest score of students whose names start with 'A'.
+SELECT MIN(Score) AS LowestScore
+FROM Student
+WHERE Name LIKE 'A%';
+
+9. Find the city having the lowest score.
+SELECT City,
+       MIN(Score) AS LowestScore
+FROM Student
+GROUP BY City
+ORDER BY LowestScore ASC
+LIMIT 1;
+
+10. Find the lowest score of students whose score is greater than the overall lowest score.
+SELECT MIN(Score) AS LowestScore
+FROM Student
+WHERE Score >
+(
+    SELECT MIN(Score)
+    FROM Student
+);
+
+
+
+
+
+
+SUM() – 10 Interview Questions + Answers
+
+
+1. Find the total score of all students.
+SELECT SUM(Score) AS TotalScore
+FROM Student;
+
+
+2. Find the total score of students from Pune.
+SELECT SUM(Score) AS TotalScore
+FROM Student
+WHERE City = 'Pune';
+
+
+3. Find the total score of students from Mumbai.
+SELECT SUM(Score) AS TotalScore
+FROM Student
+WHERE City = 'Mumbai';
+
+
+4. Find the total score in each city.
+SELECT City,
+       SUM(Score) AS TotalScore
+FROM Student
+GROUP BY City;
+
+
+5. Find the total score of students whose score is greater than 80.
+SELECT SUM(Score) AS TotalScore
+FROM Student
+WHERE Score > 80;
+
+
+6. Find the total score of students whose score is between 70 and 90.
+SELECT SUM(Score) AS TotalScore
+FROM Student
+WHERE Score BETWEEN 70 AND 90;
+
+
+7. Display cities whose total score is greater than 400.
+SELECT City,
+       SUM(Score) AS TotalScore
+FROM Student
+GROUP BY City
+HAVING SUM(Score) > 400;
+
+
+8. Find the total score of students whose names start with 'A'.
+SELECT SUM(Score) AS TotalScore
+FROM Student
+WHERE Name LIKE 'A%';
+
+
+9. Find the city having the highest total score.
+SELECT City,
+       SUM(Score) AS TotalScore
+FROM Student
+GROUP BY City
+ORDER BY TotalScore DESC
+LIMIT 1;
+
+
+10. Find the total score of students whose score is greater than the average score.
+SELECT SUM(Score) AS TotalScore
+FROM Student
+WHERE Score >
+(
+    SELECT AVG(Score)
+    FROM Student
+);
