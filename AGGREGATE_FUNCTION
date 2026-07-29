@@ -1,0 +1,388 @@
+# SQL Aggregate Functions
+
+## 📌 What are Aggregate Functions?
+
+Aggregate functions perform calculations on multiple rows and return a **single result**.
+
+They are commonly used with:
+- WHERE
+- GROUP BY
+- HAVING
+- ORDER BY
+
+---
+
+# Aggregate Functions
+
+| Function | Description |
+|----------|-------------|
+| COUNT() | Counts the number of rows |
+| SUM() | Calculates the total value |
+| AVG() | Calculates the average value |
+| MAX() | Returns the highest value |
+| MIN() | Returns the lowest value |
+
+---
+
+# Sample Table
+
+```sql
+CREATE TABLE Student
+(
+    Id INT PRIMARY KEY,
+    Name VARCHAR(50),
+    City VARCHAR(50),
+    Score INT
+);
+
+INSERT INTO Student VALUES
+(1,'Rohan','Pune',85),
+(2,'Amit','Mumbai',92),
+(3,'Neha','Delhi',78),
+(4,'Priya','Pune',95),
+(5,'Rahul','Mumbai',88),
+(6,'Sneha','Nagpur',76),
+(7,'Karan','Pune',90),
+(8,'Anjali','Delhi',82),
+(9,'Vikas','Mumbai',70),
+(10,'Pooja','Nagpur',91);
+```
+
+---
+
+# 1. COUNT()
+
+Counts the number of rows.
+
+## Syntax
+
+```sql
+SELECT COUNT(*)
+FROM Student;
+```
+
+## Example
+
+```sql
+SELECT COUNT(*) AS TotalStudents
+FROM Student;
+```
+
+---
+
+# COUNT() with WHERE
+
+```sql
+SELECT COUNT(*) AS PuneStudents
+FROM Student
+WHERE City='Pune';
+```
+
+---
+
+# COUNT() with GROUP BY
+
+```sql
+SELECT City,
+COUNT(*) AS TotalStudents
+FROM Student
+GROUP BY City;
+```
+
+---
+
+# 2. SUM()
+
+Returns the total value.
+
+## Syntax
+
+```sql
+SELECT SUM(column_name)
+FROM table_name;
+```
+
+## Example
+
+```sql
+SELECT SUM(Score) AS TotalScore
+FROM Student;
+```
+
+---
+
+# SUM() with WHERE
+
+```sql
+SELECT SUM(Score) AS TotalScore
+FROM Student
+WHERE City='Mumbai';
+```
+
+---
+
+# SUM() with GROUP BY
+
+```sql
+SELECT City,
+SUM(Score) AS TotalScore
+FROM Student
+GROUP BY City;
+```
+
+---
+
+# 3. AVG()
+
+Returns the average value.
+
+## Syntax
+
+```sql
+SELECT AVG(column_name)
+FROM table_name;
+```
+
+## Example
+
+```sql
+SELECT AVG(Score) AS AverageScore
+FROM Student;
+```
+
+---
+
+# AVG() with WHERE
+
+```sql
+SELECT AVG(Score) AS AverageScore
+FROM Student
+WHERE Score>80;
+```
+
+---
+
+# AVG() with GROUP BY
+
+```sql
+SELECT City,
+AVG(Score) AS AverageScore
+FROM Student
+GROUP BY City;
+```
+
+---
+
+# 4. MAX()
+
+Returns the highest value.
+
+## Syntax
+
+```sql
+SELECT MAX(column_name)
+FROM table_name;
+```
+
+## Example
+
+```sql
+SELECT MAX(Score) AS HighestScore
+FROM Student;
+```
+
+---
+
+# MAX() with WHERE
+
+```sql
+SELECT MAX(Score) AS HighestScore
+FROM Student
+WHERE City='Pune';
+```
+
+---
+
+# MAX() with GROUP BY
+
+```sql
+SELECT City,
+MAX(Score) AS HighestScore
+FROM Student
+GROUP BY City;
+```
+
+---
+
+# 5. MIN()
+
+Returns the lowest value.
+
+## Syntax
+
+```sql
+SELECT MIN(column_name)
+FROM table_name;
+```
+
+## Example
+
+```sql
+SELECT MIN(Score) AS LowestScore
+FROM Student;
+```
+
+---
+
+# MIN() with WHERE
+
+```sql
+SELECT MIN(Score) AS LowestScore
+FROM Student
+WHERE City='Delhi';
+```
+
+---
+
+# MIN() with GROUP BY
+
+```sql
+SELECT City,
+MIN(Score) AS LowestScore
+FROM Student
+GROUP BY City;
+```
+
+---
+
+# Aggregate Functions with HAVING
+
+Display cities having an average score greater than 85.
+
+```sql
+SELECT City,
+AVG(Score) AS AverageScore
+FROM Student
+GROUP BY City
+HAVING AVG(Score) > 85;
+```
+
+---
+
+Display cities having more than 2 students.
+
+```sql
+SELECT City,
+COUNT(*) AS TotalStudents
+FROM Student
+GROUP BY City
+HAVING COUNT(*) > 2;
+```
+
+---
+
+Display cities whose total score is greater than 250.
+
+```sql
+SELECT City,
+SUM(Score) AS TotalScore
+FROM Student
+GROUP BY City
+HAVING SUM(Score) > 250;
+```
+
+---
+
+# Multiple Aggregate Functions
+
+```sql
+SELECT
+COUNT(*) AS TotalStudents,
+SUM(Score) AS TotalScore,
+AVG(Score) AS AverageScore,
+MAX(Score) AS HighestScore,
+MIN(Score) AS LowestScore
+FROM Student;
+```
+
+---
+
+# Aggregate Functions with GROUP BY
+
+```sql
+SELECT
+City,
+COUNT(*) AS TotalStudents,
+SUM(Score) AS TotalScore,
+AVG(Score) AS AverageScore,
+MAX(Score) AS HighestScore,
+MIN(Score) AS LowestScore
+FROM Student
+GROUP BY City;
+```
+
+---
+
+# Interview Questions
+
+## What are Aggregate Functions?
+
+Aggregate functions perform calculations on multiple rows and return a single result.
+
+---
+
+## Name the Aggregate Functions.
+
+- COUNT()
+- SUM()
+- AVG()
+- MAX()
+- MIN()
+
+---
+
+## Can Aggregate Functions be used with GROUP BY?
+
+Yes. GROUP BY groups records, and aggregate functions perform calculations on each group.
+
+---
+
+## Difference between WHERE and HAVING
+
+| WHERE | HAVING |
+|--------|---------|
+| Filters rows | Filters groups |
+| Used before GROUP BY | Used after GROUP BY |
+| Cannot use aggregate functions | Can use aggregate functions |
+
+---
+
+## Difference between COUNT(*) and COUNT(column_name)
+
+| COUNT(*) | COUNT(column_name) |
+|-----------|--------------------|
+| Counts all rows | Counts only non-NULL values |
+
+---
+
+# Summary
+
+| Function | Purpose |
+|----------|---------|
+| COUNT() | Count rows |
+| SUM() | Total value |
+| AVG() | Average value |
+| MAX() | Highest value |
+| MIN() | Lowest value |
+
+---
+
+---
+
+# Author
+
+**Ruturaj Choure**
+
+.NET Full Stack Developer
+
+⭐ If this repository helped you, don't forget to **Star** it.
