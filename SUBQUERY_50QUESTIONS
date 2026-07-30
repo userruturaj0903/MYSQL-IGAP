@@ -1,0 +1,494 @@
+1. Find students whose score is greater than the average score.
+SELECT *
+FROM Student
+WHERE Score >
+(
+    SELECT AVG(Score)
+    FROM Student
+);
+2. Find students whose score is less than the average score.
+SELECT *
+FROM Student
+WHERE Score <
+(
+    SELECT AVG(Score)
+    FROM Student
+);
+3. Find the student(s) with the highest score.
+SELECT *
+FROM Student
+WHERE Score =
+(
+    SELECT MAX(Score)
+    FROM Student
+);
+4. Find the student(s) with the lowest score.
+SELECT *
+FROM Student
+WHERE Score =
+(
+    SELECT MIN(Score)
+    FROM Student
+);
+5. Find the second highest score.
+SELECT MAX(Score)
+FROM Student
+WHERE Score <
+(
+    SELECT MAX(Score)
+    FROM Student
+);
+6. Find the second lowest score.
+SELECT MIN(Score)
+FROM Student
+WHERE Score >
+(
+    SELECT MIN(Score)
+    FROM Student
+);
+7. Find students whose score is equal to the average score.
+SELECT *
+FROM Student
+WHERE Score =
+(
+    SELECT AVG(Score)
+    FROM Student
+);
+8. Find students whose score is greater than the minimum score.
+SELECT *
+FROM Student
+WHERE Score >
+(
+    SELECT MIN(Score)
+    FROM Student
+);
+9. Find students whose score is less than the highest score.
+SELECT *
+FROM Student
+WHERE Score <
+(
+    SELECT MAX(Score)
+    FROM Student
+);
+10. Find students whose score is greater than the average score of Pune.
+SELECT *
+FROM Student
+WHERE Score >
+(
+    SELECT AVG(Score)
+    FROM Student
+    WHERE City='Pune'
+);
+
+11. Find the third highest score.
+SELECT MAX(Score)
+FROM Student
+WHERE Score <
+(
+    SELECT MAX(Score)
+    FROM Student
+    WHERE Score <
+    (
+        SELECT MAX(Score)
+        FROM Student
+    )
+);
+12. Find the third lowest score.
+SELECT MIN(Score)
+FROM Student
+WHERE Score >
+(
+    SELECT MIN(Score)
+    FROM Student
+    WHERE Score >
+    (
+        SELECT MIN(Score)
+        FROM Student
+    )
+);
+13. Find students whose score is greater than the highest score in Pune.
+SELECT *
+FROM Student
+WHERE Score >
+(
+    SELECT MAX(Score)
+    FROM Student
+    WHERE City = 'Pune'
+);
+14. Find students whose score is less than the lowest score in Mumbai.
+SELECT *
+FROM Student
+WHERE Score <
+(
+    SELECT MIN(Score)
+    FROM Student
+    WHERE City = 'Mumbai'
+);
+15. Find students whose score is equal to the average score of Delhi.
+SELECT *
+FROM Student
+WHERE Score =
+(
+    SELECT AVG(Score)
+    FROM Student
+    WHERE City = 'Delhi'
+);
+16. Find students whose score is greater than the average score of Mumbai.
+SELECT *
+FROM Student
+WHERE Score >
+(
+    SELECT AVG(Score)
+    FROM Student
+    WHERE City = 'Mumbai'
+);
+17. Find students whose score is less than the average score of Pune.
+SELECT *
+FROM Student
+WHERE Score <
+(
+    SELECT AVG(Score)
+    FROM Student
+    WHERE City = 'Pune'
+);
+18. Find students whose score is equal to the highest score in Delhi.
+SELECT *
+FROM Student
+WHERE Score =
+(
+    SELECT MAX(Score)
+    FROM Student
+    WHERE City = 'Delhi'
+);
+19. Find students whose score is equal to the lowest score in Pune.
+SELECT *
+FROM Student
+WHERE Score =
+(
+    SELECT MIN(Score)
+    FROM Student
+    WHERE City = 'Pune'
+);
+20. Find students whose score is greater than the minimum score in Delhi.
+SELECT *
+FROM Student
+WHERE Score >
+(
+    SELECT MIN(Score)
+    FROM Student
+    WHERE City = 'Delhi'
+);
+
+
+21. Find students whose score is greater than the overall total score divided by the total number of students.
+SELECT *
+FROM Student
+WHERE Score >
+(
+    SELECT SUM(Score) / COUNT(*)
+    FROM Student
+);
+22. Find students whose score is greater than the average score of Nagpur.
+SELECT *
+FROM Student
+WHERE Score >
+(
+    SELECT AVG(Score)
+    FROM Student
+    WHERE City = 'Nagpur'
+);
+23. Find students whose score is less than the highest score of Delhi.
+SELECT *
+FROM Student
+WHERE Score <
+(
+    SELECT MAX(Score)
+    FROM Student
+    WHERE City = 'Delhi'
+);
+24. Find students whose score is greater than the lowest score of Pune.
+SELECT *
+FROM Student
+WHERE Score >
+(
+    SELECT MIN(Score)
+    FROM Student
+    WHERE City = 'Pune'
+);
+25. Find students whose score is equal to the highest score of Mumbai.
+SELECT *
+FROM Student
+WHERE Score =
+(
+    SELECT MAX(Score)
+    FROM Student
+    WHERE City = 'Mumbai'
+);
+26. Find students whose score is equal to the lowest score of Delhi.
+SELECT *
+FROM Student
+WHERE Score =
+(
+    SELECT MIN(Score)
+    FROM Student
+    WHERE City = 'Delhi'
+);
+27. Find students whose score is greater than the total number of students.
+SELECT *
+FROM Student
+WHERE Score >
+(
+    SELECT COUNT(*)
+    FROM Student
+);
+
+Interview Note: This query is mainly for understanding single-row subqueries. Since COUNT(*) returns a small number (e.g., 10), almost all students may satisfy the condition.
+
+28. Find students whose score is greater than half of the maximum score.
+SELECT *
+FROM Student
+WHERE Score >
+(
+    SELECT MAX(Score) / 2
+    FROM Student
+);
+29. Find students whose score is less than the average score plus 10.
+SELECT *
+FROM Student
+WHERE Score <
+(
+    SELECT AVG(Score) + 10
+    FROM Student
+);
+30. Find students whose score is greater than the average score minus 5.
+SELECT *
+FROM Student
+WHERE Score >
+(
+    SELECT AVG(Score) - 5
+    FROM Student
+);
+
+31. Find students whose score is greater than the average score of students who scored above 80.
+SELECT *
+FROM Student
+WHERE Score >
+(
+    SELECT AVG(Score)
+    FROM Student
+    WHERE Score > 80
+);
+32. Find students whose score is less than the average score of students who scored below 90.
+SELECT *
+FROM Student
+WHERE Score <
+(
+    SELECT AVG(Score)
+    FROM Student
+    WHERE Score < 90
+);
+33. Find students whose score is greater than the second highest score.
+SELECT *
+FROM Student
+WHERE Score >
+(
+    SELECT MAX(Score)
+    FROM Student
+    WHERE Score <
+    (
+        SELECT MAX(Score)
+        FROM Student
+    )
+);
+34. Find students whose score is less than the second lowest score.
+SELECT *
+FROM Student
+WHERE Score <
+(
+    SELECT MIN(Score)
+    FROM Student
+    WHERE Score >
+    (
+        SELECT MIN(Score)
+        FROM Student
+    )
+);
+35. Find students whose score is equal to the second highest score.
+SELECT *
+FROM Student
+WHERE Score =
+(
+    SELECT MAX(Score)
+    FROM Student
+    WHERE Score <
+    (
+        SELECT MAX(Score)
+        FROM Student
+    )
+);
+36. Find students whose score is equal to the second lowest score.
+SELECT *
+FROM Student
+WHERE Score =
+(
+    SELECT MIN(Score)
+    FROM Student
+    WHERE Score >
+    (
+        SELECT MIN(Score)
+        FROM Student
+    )
+);
+37. Find students whose score is greater than the average score of Mumbai and less than the highest score of Pune.
+SELECT *
+FROM Student
+WHERE Score >
+(
+    SELECT AVG(Score)
+    FROM Student
+    WHERE City = 'Mumbai'
+)
+AND Score <
+(
+    SELECT MAX(Score)
+    FROM Student
+    WHERE City = 'Pune'
+);
+38. Find students whose score is greater than the minimum score of Delhi and less than the average score of Pune.
+SELECT *
+FROM Student
+WHERE Score >
+(
+    SELECT MIN(Score)
+    FROM Student
+    WHERE City = 'Delhi'
+)
+AND Score <
+(
+    SELECT AVG(Score)
+    FROM Student
+    WHERE City = 'Pune'
+);
+39. Find students whose score is equal to the maximum score among students who scored below 90.
+SELECT *
+FROM Student
+WHERE Score =
+(
+    SELECT MAX(Score)
+    FROM Student
+    WHERE Score < 90
+);
+40. Find students whose score is equal to the minimum score among students who scored above 80.
+SELECT *
+FROM Student
+WHERE Score =
+(
+    SELECT MIN(Score)
+    FROM Student
+    WHERE Score > 80
+);
+
+
+41. Find students whose score is greater than the average score of students from Pune who scored above 80.
+SELECT *
+FROM Student
+WHERE Score >
+(
+    SELECT AVG(Score)
+    FROM Student
+    WHERE City = 'Pune'
+      AND Score > 80
+);
+42. Find students whose score is less than the average score of students from Mumbai.
+SELECT *
+FROM Student
+WHERE Score <
+(
+    SELECT AVG(Score)
+    FROM Student
+    WHERE City = 'Mumbai'
+);
+43. Find students whose score is equal to the highest score among students from Pune.
+SELECT *
+FROM Student
+WHERE Score =
+(
+    SELECT MAX(Score)
+    FROM Student
+    WHERE City = 'Pune'
+);
+44. Find students whose score is equal to the lowest score among students from Mumbai.
+SELECT *
+FROM Student
+WHERE Score =
+(
+    SELECT MIN(Score)
+    FROM Student
+    WHERE City = 'Mumbai'
+);
+45. Find students whose score is greater than the average score of students from Delhi.
+SELECT *
+FROM Student
+WHERE Score >
+(
+    SELECT AVG(Score)
+    FROM Student
+    WHERE City = 'Delhi'
+);
+46. Find students whose score is less than the maximum score of students from Nagpur.
+SELECT *
+FROM Student
+WHERE Score <
+(
+    SELECT MAX(Score)
+    FROM Student
+    WHERE City = 'Nagpur'
+);
+47. Find students whose score is greater than the minimum score of students from Mumbai.
+SELECT *
+FROM Student
+WHERE Score >
+(
+    SELECT MIN(Score)
+    FROM Student
+    WHERE City = 'Mumbai'
+);
+48. Find students whose score is equal to the average score of all students.
+SELECT *
+FROM Student
+WHERE Score =
+(
+    SELECT AVG(Score)
+    FROM Student
+);
+49. Find students whose score is greater than the average score but less than the highest score.
+SELECT *
+FROM Student
+WHERE Score >
+(
+    SELECT AVG(Score)
+    FROM Student
+)
+AND Score <
+(
+    SELECT MAX(Score)
+    FROM Student
+);
+50. Find students whose score is greater than the average score and less than the second highest score.
+SELECT *
+FROM Student
+WHERE Score >
+(
+    SELECT AVG(Score)
+    FROM Student
+)
+AND Score <
+(
+    SELECT MAX(Score)
+    FROM Student
+    WHERE Score <
+    (
+        SELECT MAX(Score)
+        FROM Student
+    )
+);
