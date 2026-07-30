@@ -1,0 +1,519 @@
+
+# SQL Window Functions
+
+> A complete guide to SQL Window Functions with syntax, examples, interview questions, and practice queries.
+
+---
+
+# What are Window Functions?
+
+A **Window Function** performs calculations across a set of rows related to the current row **without reducing the number of rows**.
+
+Unlike `GROUP BY`, window functions return a result for **every row**.
+
+---
+
+# Syntax
+
+```sql
+SELECT column1,
+       WINDOW_FUNCTION() OVER (
+           PARTITION BY column_name
+           ORDER BY column_name
+       ) AS AliasName
+FROM TableName;
+```
+
+---
+
+# Window Function Syntax Explained
+
+| Keyword | Description |
+|----------|-------------|
+| OVER() | Defines the window |
+| PARTITION BY | Divides rows into groups |
+| ORDER BY | Orders rows inside each partition |
+| WINDOW FUNCTION | Function to perform |
+
+---
+
+# Sample Table
+
+```sql
+CREATE TABLE Student
+(
+    Id INT PRIMARY KEY,
+    Name VARCHAR(50),
+    City VARCHAR(30),
+    Score INT
+);
+
+INSERT INTO Student VALUES
+(1,'Rohan','Pune',85),
+(2,'Amit','Mumbai',92),
+(3,'Neha','Delhi',78),
+(4,'Priya','Pune',95),
+(5,'Rahul','Mumbai',88),
+(6,'Sneha','Delhi',88),
+(7,'Karan','Pune',90),
+(8,'Anjali','Mumbai',75),
+(9,'Vikas','Delhi',65),
+(10,'Pooja','Pune',95);
+```
+
+---
+
+# Types of Window Functions
+
+## Ranking Functions
+
+- ROW_NUMBER()
+- RANK()
+- DENSE_RANK()
+- NTILE()
+
+---
+
+## Value Functions
+
+- LAG()
+- LEAD()
+- FIRST_VALUE()
+- LAST_VALUE()
+
+---
+
+## Aggregate Window Functions
+
+- SUM()
+- AVG()
+- COUNT()
+- MAX()
+- MIN()
+
+---
+
+# 1. ROW_NUMBER()
+
+Assigns a unique number to each row.
+
+## Syntax
+
+```sql
+SELECT *,
+ROW_NUMBER() OVER(ORDER BY Score DESC) AS RowNumber
+FROM Student;
+```
+
+### Output
+
+| Name | Score | RowNumber |
+|------|------:|----------:|
+| Priya |95|1|
+| Pooja |95|2|
+| Amit |92|3|
+
+---
+
+# ROW_NUMBER() with PARTITION BY
+
+```sql
+SELECT *,
+ROW_NUMBER() OVER(
+PARTITION BY City
+ORDER BY Score DESC
+) AS RowNumber
+FROM Student;
+```
+
+---
+
+# 2. RANK()
+
+Assigns the same rank to duplicate values.
+
+```sql
+SELECT *,
+RANK() OVER(
+ORDER BY Score DESC
+) AS RankNo
+FROM Student;
+```
+
+Example
+
+| Score | Rank |
+|------:|-----:|
+|95|1|
+|95|1|
+|92|3|
+
+---
+
+# 3. DENSE_RANK()
+
+Assigns the same rank but skips no numbers.
+
+```sql
+SELECT *,
+DENSE_RANK() OVER(
+ORDER BY Score DESC
+) AS DenseRank
+FROM Student;
+```
+
+Example
+
+| Score | Rank |
+|------:|-----:|
+|95|1|
+|95|1|
+|92|2|
+
+---
+
+# Difference
+
+| ROW_NUMBER | RANK | DENSE_RANK |
+|------------|------|------------|
+|Unique Rank|Duplicate Rank|Duplicate Rank|
+|No duplicates|Skips ranks|No skipped ranks|
+
+---
+
+# 4. NTILE()
+
+Divides rows into equal groups.
+
+```sql
+SELECT *,
+NTILE(4) OVER(
+ORDER BY Score DESC
+) AS Quartile
+FROM Student;
+```
+
+---
+
+# 5. LAG()
+
+Returns previous row value.
+
+```sql
+SELECT *,
+LAG(Score) OVER(
+ORDER BY Score
+) AS PreviousScore
+FROM Student;
+```
+
+---
+
+# 6. LEAD()
+
+Returns next row value.
+
+```sql
+SELECT *,
+LEAD(Score) OVER(
+ORDER BY Score
+) AS NextScore
+FROM Student;
+```
+
+---
+
+# Difference
+
+| LAG() | LEAD() |
+|--------|---------|
+|Previous Row|Next Row|
+
+---
+
+# 7. FIRST_VALUE()
+
+Returns first value in the window.
+
+```sql
+SELECT *,
+FIRST_VALUE(Score)
+OVER(
+ORDER BY Score DESC
+) AS HighestScore
+FROM Student;
+```
+
+---
+
+# 8. LAST_VALUE()
+
+Returns last value in the window.
+
+```sql
+SELECT *,
+LAST_VALUE(Score)
+OVER(
+ORDER BY Score DESC
+ROWS BETWEEN UNBOUNDED PRECEDING
+AND UNBOUNDED FOLLOWING
+) AS LowestScore
+FROM Student;
+```
+
+---
+
+# Aggregate Window Functions
+
+---
+
+## SUM()
+
+Running Total
+
+```sql
+SELECT *,
+SUM(Score)
+OVER(
+ORDER BY Score
+) AS RunningTotal
+FROM Student;
+```
+
+---
+
+## AVG()
+
+Running Average
+
+```sql
+SELECT *,
+AVG(Score)
+OVER(
+ORDER BY Score
+) AS RunningAverage
+FROM Student;
+```
+
+---
+
+## COUNT()
+
+Running Count
+
+```sql
+SELECT *,
+COUNT(*)
+OVER(
+ORDER BY Score
+) AS RunningCount
+FROM Student;
+```
+
+---
+
+## MAX()
+
+Running Maximum
+
+```sql
+SELECT *,
+MAX(Score)
+OVER(
+ORDER BY Score
+) AS RunningMaximum
+FROM Student;
+```
+
+---
+
+## MIN()
+
+Running Minimum
+
+```sql
+SELECT *,
+MIN(Score)
+OVER(
+ORDER BY Score
+) AS RunningMinimum
+FROM Student;
+```
+
+---
+
+# PARTITION BY Example
+
+Calculate average score for each city.
+
+```sql
+SELECT *,
+AVG(Score)
+OVER(
+PARTITION BY City
+) AS CityAverage
+FROM Student;
+```
+
+---
+
+# Running Total by City
+
+```sql
+SELECT *,
+SUM(Score)
+OVER(
+PARTITION BY City
+ORDER BY Score
+) AS RunningTotal
+FROM Student;
+```
+
+---
+
+# Highest Score in Every City
+
+```sql
+SELECT *,
+MAX(Score)
+OVER(
+PARTITION BY City
+) AS HighestScore
+FROM Student;
+```
+
+---
+
+# Lowest Score in Every City
+
+```sql
+SELECT *,
+MIN(Score)
+OVER(
+PARTITION BY City
+) AS LowestScore
+FROM Student;
+```
+
+---
+
+# Most Asked Interview Questions
+
+## Q1. What is a Window Function?
+
+A window function performs calculations across related rows without grouping the rows into a single result.
+
+---
+
+## Q2. Difference between GROUP BY and Window Function?
+
+| GROUP BY | Window Function |
+|-----------|-----------------|
+|Returns one row per group|Returns every row|
+|Uses Aggregate Functions|Uses OVER()|
+|Reduces rows|Does not reduce rows|
+
+---
+
+## Q3. What is OVER()?
+
+OVER() defines the window on which the function operates.
+
+---
+
+## Q4. Difference between ROW_NUMBER(), RANK(), and DENSE_RANK()?
+
+| Function | Duplicate Rank | Skips Rank |
+|-----------|----------------|------------|
+|ROW_NUMBER|No|No|
+|RANK|Yes|Yes|
+|DENSE_RANK|Yes|No|
+
+---
+
+## Q5. Difference between LAG() and LEAD()?
+
+| LAG() | LEAD() |
+|--------|---------|
+|Previous row|Next row|
+
+---
+
+## Q6. Why is PARTITION BY used?
+
+It divides data into logical groups while keeping all rows in the result.
+
+---
+
+## Q7. Can Aggregate Functions be used as Window Functions?
+
+Yes.
+
+- SUM()
+- AVG()
+- COUNT()
+- MAX()
+- MIN()
+
+---
+
+# Practice Questions
+
+1. Find the highest scorer.
+2. Find the second highest scorer.
+3. Rank students based on score.
+4. Assign dense ranks.
+5. Divide students into 4 groups.
+6. Show previous score.
+7. Show next score.
+8. Calculate running total.
+9. Calculate running average.
+10. Find highest score in every city.
+11. Find lowest score in every city.
+12. Find average score of each city.
+13. Find running total city-wise.
+14. Find top 3 students.
+15. Find duplicate scores using RANK().
+
+---
+
+# Repository Structure
+
+```
+SQL-Window-Functions/
+│── README.md
+│── Student_Table.sql
+│── Window_Functions.sql
+│── Practice_Questions.sql
+│── Interview_Questions.sql
+```
+
+---
+
+# Summary
+
+| Function | Purpose |
+|----------|---------|
+|ROW_NUMBER()|Unique numbering|
+|RANK()|Ranking with gaps|
+|DENSE_RANK()|Ranking without gaps|
+|NTILE()|Divide into groups|
+|LAG()|Previous row|
+|LEAD()|Next row|
+|FIRST_VALUE()|First value|
+|LAST_VALUE()|Last value|
+|SUM() OVER()|Running total|
+|AVG() OVER()|Running average|
+|COUNT() OVER()|Running count|
+|MAX() OVER()|Running maximum|
+|MIN() OVER()|Running minimum|
+
+---
+
+# Author
+
+**Ruturaj Choure**
+
+**.NET Full Stack Developer**
+
+⭐ If you found this repository useful, don't forget to **Star** it.
