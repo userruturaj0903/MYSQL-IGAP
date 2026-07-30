@@ -1,0 +1,562 @@
+# SQL Subquery
+
+> A complete guide to SQL Subqueries with syntax, types, examples, interview questions, and practice queries.
+
+---
+
+# What is a Subquery?
+
+A **Subquery** (also called an **Inner Query** or **Nested Query**) is a query written inside another SQL query.
+
+The inner query executes first, and its result is used by the outer query.
+
+---
+
+# Syntax
+
+```sql
+SELECT column_name
+FROM table_name
+WHERE column_name Operator
+(
+    SELECT column_name
+    FROM table_name
+);
+```
+
+---
+
+# How Subquery Works
+
+1. Inner Query executes first.
+2. Inner Query returns a value or values.
+3. Outer Query uses that result.
+4. Final result is displayed.
+
+---
+
+# Sample Table
+
+```sql
+CREATE TABLE Student
+(
+    Id INT PRIMARY KEY,
+    Name VARCHAR(50),
+    City VARCHAR(30),
+    Score INT
+);
+
+INSERT INTO Student VALUES
+(1,'Rohan','Pune',85),
+(2,'Amit','Mumbai',92),
+(3,'Neha','Delhi',78),
+(4,'Priya','Pune',95),
+(5,'Rahul','Mumbai',88),
+(6,'Sneha','Delhi',88),
+(7,'Karan','Pune',90),
+(8,'Anjali','Mumbai',75),
+(9,'Vikas','Delhi',65),
+(10,'Pooja','Pune',95);
+```
+
+---
+
+# Types of Subqueries
+
+- Single Row Subquery
+- Multiple Row Subquery
+- Multiple Column Subquery
+- Correlated Subquery
+- Nested Subquery
+
+---
+
+# 1. Single Row Subquery
+
+Returns only one value.
+
+Example
+
+Find students whose score is greater than the average score.
+
+```sql
+SELECT *
+FROM Student
+WHERE Score >
+(
+    SELECT AVG(Score)
+    FROM Student
+);
+```
+
+---
+
+# Find Highest Score
+
+```sql
+SELECT *
+FROM Student
+WHERE Score =
+(
+    SELECT MAX(Score)
+    FROM Student
+);
+```
+
+---
+
+# Find Lowest Score
+
+```sql
+SELECT *
+FROM Student
+WHERE Score =
+(
+    SELECT MIN(Score)
+    FROM Student
+);
+```
+
+---
+
+# 2. Multiple Row Subquery
+
+Returns multiple values.
+
+Example
+
+Find students from cities where score is greater than 90.
+
+```sql
+SELECT *
+FROM Student
+WHERE City IN
+(
+    SELECT City
+    FROM Student
+    WHERE Score > 90
+);
+```
+
+---
+
+# Using IN
+
+```sql
+SELECT *
+FROM Student
+WHERE Score IN
+(
+    SELECT Score
+    FROM Student
+    WHERE City='Pune'
+);
+```
+
+---
+
+# Using NOT IN
+
+```sql
+SELECT *
+FROM Student
+WHERE City NOT IN
+(
+    SELECT City
+    FROM Student
+    WHERE Score > 90
+);
+```
+
+---
+
+# Using ANY
+
+```sql
+SELECT *
+FROM Student
+WHERE Score > ANY
+(
+    SELECT Score
+    FROM Student
+    WHERE City='Mumbai'
+);
+```
+
+---
+
+# Using ALL
+
+```sql
+SELECT *
+FROM Student
+WHERE Score > ALL
+(
+    SELECT Score
+    FROM Student
+    WHERE City='Mumbai'
+);
+```
+
+---
+
+# 3. Correlated Subquery
+
+A correlated subquery executes once for every row returned by the outer query.
+
+Find students scoring above their city average.
+
+```sql
+SELECT *
+FROM Student S1
+WHERE Score >
+(
+    SELECT AVG(Score)
+    FROM Student S2
+    WHERE S1.City=S2.City
+);
+```
+
+---
+
+# EXISTS
+
+Returns TRUE if the subquery returns any rows.
+
+```sql
+SELECT *
+FROM Student S1
+WHERE EXISTS
+(
+    SELECT *
+    FROM Student S2
+    WHERE S1.City=S2.City
+);
+```
+
+---
+
+# NOT EXISTS
+
+```sql
+SELECT *
+FROM Student S1
+WHERE NOT EXISTS
+(
+    SELECT *
+    FROM Student S2
+    WHERE S1.Score<S2.Score
+);
+```
+
+---
+
+# Subquery in SELECT
+
+```sql
+SELECT
+Name,
+Score,
+(
+SELECT AVG(Score)
+FROM Student
+) AS AverageScore
+FROM Student;
+```
+
+---
+
+# Subquery in FROM
+
+```sql
+SELECT *
+FROM
+(
+SELECT *
+FROM Student
+WHERE Score>80
+) AS HighScorers;
+```
+
+---
+
+# Subquery in HAVING
+
+```sql
+SELECT City,
+AVG(Score)
+FROM Student
+GROUP BY City
+HAVING AVG(Score)>
+(
+SELECT AVG(Score)
+FROM Student
+);
+```
+
+---
+
+# Nested Subquery
+
+```sql
+SELECT *
+FROM Student
+WHERE Score =
+(
+SELECT MAX(Score)
+FROM Student
+WHERE City =
+(
+SELECT City
+FROM Student
+WHERE Name='Rohan'
+)
+);
+```
+
+---
+
+# Most Asked Interview Questions
+
+## 1. Find students scoring above average.
+
+```sql
+SELECT *
+FROM Student
+WHERE Score >
+(
+SELECT AVG(Score)
+FROM Student
+);
+```
+
+---
+
+## 2. Find students having highest score.
+
+```sql
+SELECT *
+FROM Student
+WHERE Score=
+(
+SELECT MAX(Score)
+FROM Student
+);
+```
+
+---
+
+## 3. Find second highest score.
+
+```sql
+SELECT MAX(Score)
+FROM Student
+WHERE Score <
+(
+SELECT MAX(Score)
+FROM Student
+);
+```
+
+---
+
+## 4. Find third highest score.
+
+```sql
+SELECT MAX(Score)
+FROM Student
+WHERE Score <
+(
+SELECT MAX(Score)
+FROM Student
+WHERE Score <
+(
+SELECT MAX(Score)
+FROM Student
+)
+);
+```
+
+---
+
+## 5. Find students below average.
+
+```sql
+SELECT *
+FROM Student
+WHERE Score <
+(
+SELECT AVG(Score)
+FROM Student
+);
+```
+
+---
+
+## 6. Find students having lowest score.
+
+```sql
+SELECT *
+FROM Student
+WHERE Score=
+(
+SELECT MIN(Score)
+FROM Student
+);
+```
+
+---
+
+## 7. Find cities having maximum average score.
+
+```sql
+SELECT City,
+AVG(Score)
+FROM Student
+GROUP BY City
+HAVING AVG(Score)=
+(
+SELECT MAX(AvgScore)
+FROM
+(
+SELECT AVG(Score) AvgScore
+FROM Student
+GROUP BY City
+) X
+);
+```
+
+---
+
+## 8. Find students whose score equals Pune average.
+
+```sql
+SELECT *
+FROM Student
+WHERE Score=
+(
+SELECT AVG(Score)
+FROM Student
+WHERE City='Pune'
+);
+```
+
+---
+
+## 9. Find all students from the city having the highest scorer.
+
+```sql
+SELECT *
+FROM Student
+WHERE City=
+(
+SELECT City
+FROM Student
+WHERE Score=
+(
+SELECT MAX(Score)
+FROM Student
+)
+LIMIT 1
+);
+```
+
+---
+
+## 10. Find students scoring above their city average.
+
+```sql
+SELECT *
+FROM Student S1
+WHERE Score>
+(
+SELECT AVG(Score)
+FROM Student S2
+WHERE S1.City=S2.City
+);
+```
+
+---
+
+# Difference Between Subquery and Join
+
+| Subquery | Join |
+|----------|------|
+|Query inside another query|Combines multiple tables|
+|Can be nested|Usually faster|
+|Easy to understand|Better performance for large datasets|
+|May execute multiple times|Executed once by optimizer|
+
+---
+
+# Advantages
+
+- Easy to write
+- Easy to understand
+- Reduces complex SQL
+- Useful with Aggregate Functions
+- Useful for filtering
+
+---
+
+# Disadvantages
+
+- Can be slower than joins
+- Difficult to debug
+- Correlated subqueries may be expensive
+
+---
+
+# Practice Questions
+
+1. Find highest scorer.
+2. Find second highest scorer.
+3. Find third highest scorer.
+4. Find lowest scorer.
+5. Find students above average.
+6. Find students below average.
+7. Find students above city average.
+8. Find cities above overall average.
+9. Find students from highest scoring city.
+10. Find students matching Pune average.
+11. Find students with duplicate scores.
+12. Find city having highest average.
+13. Find city having lowest average.
+14. Find students using EXISTS.
+15. Find students using NOT EXISTS.
+
+---
+
+# Repository Structure
+
+```
+SQL-Subquery/
+│── README.md
+│── Student_Table.sql
+│── Subquery.sql
+│── Practice_Questions.sql
+│── Interview_Questions.sql
+```
+
+---
+
+# Summary
+
+| Type | Description |
+|------|-------------|
+| Single Row | Returns one value |
+| Multiple Row | Returns multiple values |
+| Correlated | Depends on outer query |
+| Nested | Multiple levels of subqueries |
+| EXISTS | Checks row existence |
+| NOT EXISTS | Checks row absence |
+
+---
+
+# Author
+
+**Ruturaj Choure**
+
+**.NET Full Stack Developer**
+
+⭐ If you found this repository helpful, don't forget to **Star** it.
