@@ -1,0 +1,358 @@
+-- Create Database
+CREATE DATABASE StudentDB;
+
+USE StudentDB;
+
+----------------------------------------------------
+-- City Table
+----------------------------------------------------
+
+CREATE TABLE City
+(
+    CityId INT PRIMARY KEY AUTO_INCREMENT,
+    CityName VARCHAR(50) NOT NULL,
+    Tier VARCHAR(20) NOT NULL
+);
+
+----------------------------------------------------
+-- Student Table
+----------------------------------------------------
+
+CREATE TABLE Student
+(
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100) NOT NULL,
+    Age INT NOT NULL,
+    Score DECIMAL(5,2) NOT NULL,
+    CityId INT NOT NULL,
+
+    CONSTRAINT FK_Student_City
+        FOREIGN KEY (CityId)
+        REFERENCES City(CityId)
+);
+
+----------------------------------------------------
+-- Insert Data into City Table
+----------------------------------------------------
+
+INSERT INTO City (CityName, Tier)
+VALUES
+('Mumbai','Tier-1'),
+('Pune','Tier-1'),
+('Delhi','Tier-1'),
+('Nagpur','Tier-2'),
+('Nashik','Tier-2'),
+('Aurangabad','Tier-2'),
+('Kolhapur','Tier-3'),
+('Amravati','Tier-3');
+
+----------------------------------------------------
+-- Insert Data into Student Table
+----------------------------------------------------
+
+INSERT INTO Student (Name, Age, Score, CityId)
+VALUES
+('Rohan',22,85,2),
+('Amit',23,92,1),
+('Neha',21,78,3),
+('Priya',24,95,2),
+('Rahul',22,88,1),
+('Sneha',20,76,4),
+('Karan',23,90,2),
+('Anjali',21,82,3),
+('Vikas',25,70,5),
+('Pooja',22,91,2),
+('Sachin',24,68,6),
+('Komal',20,87,7),
+('Akash',23,80,8),
+('Nikita',21,89,1),
+('Ritesh',22,93,4),
+('Meena',24,75,5),
+('Yash',23,84,2),
+('Aarti',22,96,3),
+('Sagar',25,77,7),
+('Bhavna',21,81,8);
+
+----------------------------------------------------
+-- Verify Data
+----------------------------------------------------
+
+SELECT * FROM City;
+
+SELECT * FROM Student;
+
+
+
+
+
+
+
+
+
+1. INNER JOIN (10 Questions)
+Q1. Display all students along with their city names.
+SELECT s.Id, s.Name, s.Age, s.Score, c.CityName
+FROM Student s
+INNER JOIN City c
+ON s.CityId = c.CityId;
+
+Q2. Display student name and city tier.
+SELECT s.Name, c.Tier
+FROM Student s
+INNER JOIN City c
+ON s.CityId = c.CityId;
+
+Q3. Display students from Tier-1 cities.
+SELECT s.Name, c.CityName
+FROM Student s
+INNER JOIN City c
+ON s.CityId = c.CityId
+WHERE c.Tier='Tier-1';
+
+Q4. Display students whose score is greater than 85.
+SELECT s.Name, s.Score, c.CityName
+FROM Student s
+INNER JOIN City c
+ON s.CityId=c.CityId
+WHERE s.Score>85;
+
+Q5. Count students in each city.
+SELECT c.CityName, COUNT(*) AS TotalStudents
+FROM Student s
+INNER JOIN City c
+ON s.CityId=c.CityId
+GROUP BY c.CityName;
+
+Q6. Find the average score of each city.
+SELECT c.CityName, AVG(s.Score) AS AverageScore
+FROM Student s
+INNER JOIN City c
+ON s.CityId=c.CityId
+GROUP BY c.CityName;
+
+Q7. Find the highest score city-wise.
+SELECT c.CityName, MAX(s.Score) AS HighestScore
+FROM Student s
+INNER JOIN City c
+ON s.CityId=c.CityId
+GROUP BY c.CityName;
+
+Q8. Display students from Pune.
+SELECT s.Name, s.Score
+FROM Student s
+INNER JOIN City c
+ON s.CityId=c.CityId
+WHERE c.CityName='Pune';
+
+Q9. Display all students ordered by city name.
+SELECT s.Name, c.CityName
+FROM Student s
+INNER JOIN City c
+ON s.CityId=c.CityId
+ORDER BY c.CityName;
+
+Q10. Find the total score city-wise.
+SELECT c.CityName, SUM(s.Score) AS TotalScore
+FROM Student s
+INNER JOIN City c
+ON s.CityId=c.CityId
+GROUP BY c.CityName;
+
+2. LEFT JOIN (10 Questions)
+Q1. Display all students and their city details.
+SELECT s.Name,c.CityName
+FROM Student s
+LEFT JOIN City c
+ON s.CityId=c.CityId;
+
+Q2. Display students even if city details are missing.
+SELECT *
+FROM Student s
+LEFT JOIN City c
+ON s.CityId=c.CityId;
+
+Q3. Find students whose city does not exist.
+SELECT s.*
+FROM Student s
+LEFT JOIN City c
+ON s.CityId=c.CityId
+WHERE c.CityId IS NULL;
+
+Q4. Show all students with city tier.
+SELECT s.Name,c.Tier
+FROM Student s
+LEFT JOIN City c
+ON s.CityId=c.CityId;
+
+Q5. Count students including missing cities.
+SELECT c.CityName,COUNT(s.Id)
+FROM Student s
+LEFT JOIN City c
+ON s.CityId=c.CityId
+GROUP BY c.CityName;
+
+Q6. Show student name and city.
+SELECT s.Name,c.CityName
+FROM Student s
+LEFT JOIN City c
+ON s.CityId=c.CityId;
+
+Q7. Display students older than 22.
+SELECT s.Name,c.CityName
+FROM Student s
+LEFT JOIN City c
+ON s.CityId=c.CityId
+WHERE s.Age>22;
+
+Q8. Display students with score greater than average.
+SELECT s.Name,c.CityName,s.Score
+FROM Student s
+LEFT JOIN City c
+ON s.CityId=c.CityId
+WHERE s.Score>
+(
+SELECT AVG(Score)
+FROM Student
+);
+
+Q9. Display all student-city records ordered by score.
+SELECT s.Name,c.CityName,s.Score
+FROM Student s
+LEFT JOIN City c
+ON s.CityId=c.CityId
+ORDER BY s.Score DESC;
+
+Q10. Display total students city-wise.
+SELECT c.CityName,COUNT(s.Id)
+FROM Student s
+LEFT JOIN City c
+ON s.CityId=c.CityId
+GROUP BY c.CityName;
+
+
+3. RIGHT JOIN (10 Questions)
+Q1. Display all cities and students.
+SELECT c.CityName,s.Name
+FROM Student s
+RIGHT JOIN City c
+ON s.CityId=c.CityId;
+
+Q2. Show all cities even if no students.
+SELECT *
+FROM Student s
+RIGHT JOIN City c
+ON s.CityId=c.CityId;
+
+Q3. Find cities with no students.
+SELECT c.CityName
+FROM Student s
+RIGHT JOIN City c
+ON s.CityId=c.CityId
+WHERE s.Id IS NULL;
+
+Q4. Count students city-wise.
+SELECT c.CityName,COUNT(s.Id)
+FROM Student s
+RIGHT JOIN City c
+ON s.CityId=c.CityId
+GROUP BY c.CityName;
+
+Q5. Find average score city-wise.
+SELECT c.CityName,AVG(s.Score)
+FROM Student s
+RIGHT JOIN City c
+ON s.CityId=c.CityId
+GROUP BY c.CityName;
+
+Q6. Highest score city-wise.
+SELECT c.CityName,MAX(s.Score)
+FROM Student s
+RIGHT JOIN City c
+ON s.CityId=c.CityId
+GROUP BY c.CityName;
+
+Q7. Lowest score city-wise.
+SELECT c.CityName,MIN(s.Score)
+FROM Student s
+RIGHT JOIN City c
+ON s.CityId=c.CityId
+GROUP BY c.CityName;
+
+Q8. Show Tier-1 cities.
+SELECT c.CityName,c.Tier,s.Name
+FROM Student s
+RIGHT JOIN City c
+ON s.CityId=c.CityId
+WHERE c.Tier='Tier-1';
+
+Q9. Display cities ordered alphabetically.
+SELECT c.CityName,s.Name
+FROM Student s
+RIGHT JOIN City c
+ON s.CityId=c.CityId
+ORDER BY c.CityName;
+
+Q10. Find total score city-wise.
+SELECT c.CityName,SUM(s.Score)
+FROM Student s
+RIGHT JOIN City c
+ON s.CityId=c.CityId
+GROUP BY c.CityName;
+
+
+
+4. CROSS JOIN (10 Questions)
+Q1. Display every student with every city.
+SELECT s.Name,c.CityName
+FROM Student s
+CROSS JOIN City c;
+
+Q2. Count total combinations.
+SELECT COUNT(*)
+FROM Student s
+CROSS JOIN City c;
+
+Q3. Display student name and tier.
+SELECT s.Name,c.Tier
+FROM Student s
+CROSS JOIN City c;
+
+Q4. Show combinations ordered by student.
+SELECT s.Name,c.CityName
+FROM Student s
+CROSS JOIN City c
+ORDER BY s.Name;
+
+Q5. Show combinations ordered by city.
+SELECT s.Name,c.CityName
+FROM Student s
+CROSS JOIN City c
+ORDER BY c.CityName;
+
+Q6. Students with cities having Tier-1.
+SELECT s.Name,c.CityName
+FROM Student s
+CROSS JOIN City c
+WHERE c.Tier='Tier-1';
+
+Q7. Display all combinations with score.
+SELECT s.Name,s.Score,c.CityName
+FROM Student s
+CROSS JOIN City c;
+
+Q8. Display combinations where score > 80.
+SELECT s.Name,c.CityName
+FROM Student s
+CROSS JOIN City c
+WHERE s.Score>80;
+
+Q9. Display combinations for students aged above 22.
+SELECT s.Name,c.CityName
+FROM Student s
+CROSS JOIN City c
+WHERE s.Age>22;
+
+Q10. Total score for every student-city combination.
+SELECT s.Name,c.CityName,s.Score
+FROM Student s
+CROSS JOIN City c;
