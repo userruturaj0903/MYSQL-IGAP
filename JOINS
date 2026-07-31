@@ -1,0 +1,399 @@
+# SQL JOINS
+
+A complete guide to SQL Joins with syntax, examples, interview questions, and practice queries.
+
+---
+
+# Table of Contents
+
+- What is Join?
+- Types of Joins
+- INNER JOIN
+- LEFT JOIN
+- RIGHT JOIN
+- FULL OUTER JOIN
+- CROSS JOIN
+- SELF JOIN
+- Difference Between Joins
+- Interview Questions
+- Practice Questions
+
+---
+
+# What is JOIN?
+
+A JOIN is used to combine rows from two or more tables based on a related column.
+
+Example:
+
+- Student
+- City
+
+Both tables are connected using **CityId**.
+
+---
+
+# Types of SQL Joins
+
+- INNER JOIN
+- LEFT JOIN
+- RIGHT JOIN
+- FULL OUTER JOIN
+- CROSS JOIN
+- SELF JOIN
+
+---
+
+# Sample Tables
+
+## Student
+
+| Id | Name | Age | Score | CityId |
+|----|------|-----|-------|--------|
+|1|Rahul|22|85|1|
+|2|Neha|21|90|2|
+|3|Amit|23|70|1|
+
+---
+
+## City
+
+| CityId | CityName | Tier |
+|---------|----------|-------|
+|1|Pune|Tier-1|
+|2|Mumbai|Tier-1|
+|3|Nagpur|Tier-2|
+
+---
+
+# INNER JOIN
+
+Returns only matching records from both tables.
+
+## Syntax
+
+```sql
+SELECT columns
+FROM Table1
+INNER JOIN Table2
+ON Table1.Column = Table2.Column;
+```
+
+## Example
+
+```sql
+SELECT s.Name,
+       s.Score,
+       c.CityName
+FROM Student s
+INNER JOIN City c
+ON s.CityId = c.CityId;
+```
+
+---
+
+# LEFT JOIN
+
+Returns all records from the left table and matching records from the right table.
+
+## Syntax
+
+```sql
+SELECT *
+FROM Table1
+LEFT JOIN Table2
+ON Table1.Column = Table2.Column;
+```
+
+## Example
+
+```sql
+SELECT s.Name,
+       c.CityName
+FROM Student s
+LEFT JOIN City c
+ON s.CityId = c.CityId;
+```
+
+---
+
+# RIGHT JOIN
+
+Returns all records from the right table and matching records from the left table.
+
+## Syntax
+
+```sql
+SELECT *
+FROM Table1
+RIGHT JOIN Table2
+ON Table1.Column = Table2.Column;
+```
+
+## Example
+
+```sql
+SELECT s.Name,
+       c.CityName
+FROM Student s
+RIGHT JOIN City c
+ON s.CityId = c.CityId;
+```
+
+---
+
+# FULL OUTER JOIN
+
+Returns all matching and non-matching rows from both tables.
+
+> MySQL does not support FULL OUTER JOIN directly.
+
+Use UNION.
+
+```sql
+SELECT *
+FROM Student s
+LEFT JOIN City c
+ON s.CityId = c.CityId
+
+UNION
+
+SELECT *
+FROM Student s
+RIGHT JOIN City c
+ON s.CityId = c.CityId;
+```
+
+---
+
+# CROSS JOIN
+
+Returns every possible combination.
+
+## Syntax
+
+```sql
+SELECT *
+FROM Student
+CROSS JOIN City;
+```
+
+---
+
+# SELF JOIN
+
+A table joins with itself.
+
+Example:
+
+```sql
+SELECT A.Name,
+       B.Name
+FROM Employee A
+JOIN Employee B
+ON A.ManagerId = B.EmployeeId;
+```
+
+---
+
+# Difference Between Joins
+
+| Join | Returns |
+|-------|----------|
+| INNER JOIN | Matching rows only |
+| LEFT JOIN | All left + matching right |
+| RIGHT JOIN | All right + matching left |
+| FULL OUTER JOIN | All rows from both tables |
+| CROSS JOIN | Cartesian Product |
+| SELF JOIN | Same table joined with itself |
+
+---
+
+# Most Asked Interview Questions
+
+## 1. Display all students with city names.
+
+```sql
+SELECT s.Name,
+       c.CityName
+FROM Student s
+INNER JOIN City c
+ON s.CityId = c.CityId;
+```
+
+---
+
+## 2. Display all students from Pune.
+
+```sql
+SELECT s.Name,
+       c.CityName
+FROM Student s
+INNER JOIN City c
+ON s.CityId = c.CityId
+WHERE c.CityName='Pune';
+```
+
+---
+
+## 3. Count students city-wise.
+
+```sql
+SELECT c.CityName,
+       COUNT(*) AS TotalStudents
+FROM Student s
+INNER JOIN City c
+ON s.CityId=c.CityId
+GROUP BY c.CityName;
+```
+
+---
+
+## 4. Average score city-wise.
+
+```sql
+SELECT c.CityName,
+       AVG(s.Score)
+FROM Student s
+INNER JOIN City c
+ON s.CityId=c.CityId
+GROUP BY c.CityName;
+```
+
+---
+
+## 5. Highest score city-wise.
+
+```sql
+SELECT c.CityName,
+       MAX(s.Score)
+FROM Student s
+INNER JOIN City c
+ON s.CityId=c.CityId
+GROUP BY c.CityName;
+```
+
+---
+
+## 6. Display customers with orders.
+
+```sql
+SELECT c.first_name,
+       c.last_name,
+       o.item
+FROM Customers c
+INNER JOIN Orders o
+ON c.customer_id=o.customer_id;
+```
+
+---
+
+## 7. Count total orders per customer.
+
+```sql
+SELECT c.first_name,
+       c.last_name,
+       COUNT(o.order_id) AS TotalOrders
+FROM Customers c
+INNER JOIN Orders o
+ON c.customer_id=o.customer_id
+GROUP BY c.customer_id,
+         c.first_name,
+         c.last_name;
+```
+
+---
+
+## 8. Customer who placed the highest number of orders.
+
+```sql
+SELECT c.first_name,
+       c.last_name,
+       COUNT(o.order_id) AS TotalOrders
+FROM Customers c
+INNER JOIN Orders o
+ON c.customer_id=o.customer_id
+GROUP BY c.customer_id,
+         c.first_name,
+         c.last_name
+ORDER BY TotalOrders DESC
+LIMIT 1;
+```
+
+---
+
+## 9. Display customer with shipping status.
+
+```sql
+SELECT c.first_name,
+       c.last_name,
+       s.status
+FROM Customers c
+INNER JOIN Shippings s
+ON c.customer_id=s.customer;
+```
+
+---
+
+## 10. Display customer, order, amount and shipping status.
+
+```sql
+SELECT c.first_name,
+       c.last_name,
+       o.item,
+       o.amount,
+       s.status
+FROM Customers c
+INNER JOIN Orders o
+ON c.customer_id=o.customer_id
+INNER JOIN Shippings s
+ON c.customer_id=s.customer;
+```
+
+---
+
+# Practice Questions
+
+1. Display all students with city names.
+2. Display students from Tier-1 cities.
+3. Count students city-wise.
+4. Find highest score city-wise.
+5. Find average score city-wise.
+6. Display all customers with orders.
+7. Count orders for each customer.
+8. Find customer who placed the highest orders.
+9. Display customer shipping status.
+10. Display customer, order and shipping details.
+
+---
+
+# Interview Tips
+
+- Always remember the JOIN syntax.
+- Understand Primary Key and Foreign Key.
+- Practice GROUP BY with JOIN.
+- Practice HAVING with JOIN.
+- Learn three-table JOINs.
+- Know the difference between INNER, LEFT, RIGHT, FULL, CROSS, and SELF JOIN.
+
+---
+
+## Repository Structure
+
+```
+SQL-Joins/
+│── README.md
+│── Student_City_Tables.sql
+│── Customer_Order_Shipping.sql
+│── Join_Examples.sql
+│── Interview_Questions.sql
+│── Practice_Questions.sql
+```
+
+---
+
+### Author
+
+**Ruturaj Choure**
+
+**.NET Full Stack Developer**
