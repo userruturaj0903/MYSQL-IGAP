@@ -1,0 +1,376 @@
+# SQL DCL (Data Control Language)
+
+A complete guide to SQL DCL commands with syntax, examples, interview questions, and practice queries.
+
+---
+
+# Table of Contents
+
+- What is DCL?
+- Types of DCL Commands
+- GRANT
+- REVOKE
+- Interview Questions
+- Practice Questions
+
+---
+
+# What is DCL?
+
+**DCL (Data Control Language)** is used to **control access and permissions** on database objects.
+
+It defines **who can access the database and what operations they can perform.**
+
+---
+
+# DCL Commands
+
+| Command | Description |
+|----------|-------------|
+| GRANT | Gives permissions to a user |
+| REVOKE | Removes permissions from a user |
+
+---
+
+# 1. GRANT
+
+The **GRANT** command is used to provide privileges to a user.
+
+## Syntax
+
+```sql
+GRANT privilege_name
+ON table_name
+TO user_name;
+```
+
+---
+
+## Grant SELECT Permission
+
+```sql
+GRANT SELECT
+ON Student
+TO 'john'@'localhost';
+```
+
+The user can only read data.
+
+---
+
+## Grant INSERT Permission
+
+```sql
+GRANT INSERT
+ON Student
+TO 'john'@'localhost';
+```
+
+The user can insert records.
+
+---
+
+## Grant UPDATE Permission
+
+```sql
+GRANT UPDATE
+ON Student
+TO 'john'@'localhost';
+```
+
+The user can update records.
+
+---
+
+## Grant DELETE Permission
+
+```sql
+GRANT DELETE
+ON Student
+TO 'john'@'localhost';
+```
+
+The user can delete records.
+
+---
+
+## Grant Multiple Permissions
+
+```sql
+GRANT SELECT, INSERT, UPDATE
+ON Student
+TO 'john'@'localhost';
+```
+
+---
+
+## Grant All Permissions
+
+```sql
+GRANT ALL PRIVILEGES
+ON Student
+TO 'john'@'localhost';
+```
+
+---
+
+## Grant All Privileges on Database
+
+```sql
+GRANT ALL PRIVILEGES
+ON StudentDB.*
+TO 'john'@'localhost';
+```
+
+---
+
+# 2. REVOKE
+
+The **REVOKE** command removes permissions from a user.
+
+## Syntax
+
+```sql
+REVOKE privilege_name
+ON table_name
+FROM user_name;
+```
+
+---
+
+## Revoke SELECT Permission
+
+```sql
+REVOKE SELECT
+ON Student
+FROM 'john'@'localhost';
+```
+
+---
+
+## Revoke INSERT Permission
+
+```sql
+REVOKE INSERT
+ON Student
+FROM 'john'@'localhost';
+```
+
+---
+
+## Revoke UPDATE Permission
+
+```sql
+REVOKE UPDATE
+ON Student
+FROM 'john'@'localhost';
+```
+
+---
+
+## Revoke DELETE Permission
+
+```sql
+REVOKE DELETE
+ON Student
+FROM 'john'@'localhost';
+```
+
+---
+
+## Revoke Multiple Permissions
+
+```sql
+REVOKE SELECT, INSERT
+ON Student
+FROM 'john'@'localhost';
+```
+
+---
+
+## Revoke All Permissions
+
+```sql
+REVOKE ALL PRIVILEGES
+ON Student
+FROM 'john'@'localhost';
+```
+
+---
+
+# Show User Privileges
+
+```sql
+SHOW GRANTS FOR 'john'@'localhost';
+```
+
+Displays all permissions assigned to the user.
+
+---
+
+# Create User
+
+```sql
+CREATE USER 'john'@'localhost'
+IDENTIFIED BY 'Password@123';
+```
+
+---
+
+# Drop User
+
+```sql
+DROP USER 'john'@'localhost';
+```
+
+---
+
+# Flush Privileges
+
+```sql
+FLUSH PRIVILEGES;
+```
+
+Reloads the privilege tables.
+
+---
+
+# Common Privileges
+
+| Privilege | Description |
+|-----------|-------------|
+| SELECT | Read data |
+| INSERT | Insert records |
+| UPDATE | Modify records |
+| DELETE | Delete records |
+| CREATE | Create database objects |
+| DROP | Delete database objects |
+| ALTER | Modify table structure |
+| INDEX | Create indexes |
+| REFERENCES | Create foreign keys |
+| ALL PRIVILEGES | All permissions |
+
+---
+
+# Interview Questions
+
+## 1. What is DCL?
+
+DCL (Data Control Language) is used to manage user permissions and access to database objects.
+
+---
+
+## 2. Which commands are part of DCL?
+
+- GRANT
+- REVOKE
+
+---
+
+## 3. Difference between GRANT and REVOKE
+
+| GRANT | REVOKE |
+|--------|---------|
+| Gives permissions | Removes permissions |
+
+---
+
+## 4. Give SELECT permission to a user.
+
+```sql
+GRANT SELECT
+ON Student
+TO 'john'@'localhost';
+```
+
+---
+
+## 5. Remove UPDATE permission from a user.
+
+```sql
+REVOKE UPDATE
+ON Student
+FROM 'john'@'localhost';
+```
+
+---
+
+## 6. Grant all privileges on Student table.
+
+```sql
+GRANT ALL PRIVILEGES
+ON Student
+TO 'john'@'localhost';
+```
+
+---
+
+## 7. Display all permissions of a user.
+
+```sql
+SHOW GRANTS FOR 'john'@'localhost';
+```
+
+---
+
+## 8. Create a new user.
+
+```sql
+CREATE USER 'john'@'localhost'
+IDENTIFIED BY 'Password@123';
+```
+
+---
+
+## 9. Delete a user.
+
+```sql
+DROP USER 'john'@'localhost';
+```
+
+---
+
+## 10. Reload privilege tables.
+
+```sql
+FLUSH PRIVILEGES;
+```
+
+---
+
+# Practice Questions
+
+1. Create a new user.
+2. Grant SELECT permission.
+3. Grant INSERT permission.
+4. Grant UPDATE permission.
+5. Grant DELETE permission.
+6. Grant multiple permissions.
+7. Grant all privileges.
+8. Revoke SELECT permission.
+9. Revoke all privileges.
+10. Display user privileges.
+
+---
+
+# Difference Between SQL Command Types
+
+| Command Type | Purpose |
+|--------------|---------|
+| DDL | Database structure |
+| DML | Modify data |
+| DQL | Retrieve data |
+| DCL | Control user permissions |
+| TCL | Transaction management |
+
+---
+
+---
+
+# Author
+
+**Ruturaj Choure**
+
+**.NET Full Stack Developer**
+
+⭐ If you found this repository useful, don't forget to **Star** it.
