@@ -1,0 +1,118 @@
+# 📅 Day 6 – Order Module
+
+## 🚀 Features Implemented
+
+- ✅ Order Model
+- ✅ OrderItem Model
+- ✅ One-to-Many Relationship (Order → OrderItems)
+- ✅ Place Order API
+- ✅ Get All Orders API
+- ✅ Get Order By Id API
+- ✅ Update Order Status API
+- ✅ Cancel Order API
+- ✅ Repository Pattern
+- ✅ DTOs
+- ✅ Entity Framework Core
+- ✅ MySQL Database
+- ✅ JWT Protected APIs
+
+---
+
+## 📂 Folder Structure
+
+```
+Controllers
+│
+└── OrderController.cs
+
+Models
+│
+├── Order.cs
+└── OrderItem.cs
+
+DTOs
+│
+└── Order
+    ├── PlaceOrderDto.cs
+    ├── UpdateOrderStatusDto.cs
+    └── OrderResponseDto.cs
+
+Interfaces
+│
+└── IOrderRepository.cs
+
+Repositories
+│
+└── OrderRepository.cs
+```
+
+---
+
+## 📌 APIs
+
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| POST | `/api/Order` | Place Order |
+| GET | `/api/Order` | Get All Orders |
+| GET | `/api/Order/{id}` | Get Order By Id |
+| PUT | `/api/Order/Status/{id}` | Update Order Status |
+| DELETE | `/api/Order/{id}` | Cancel Order |
+
+---
+
+## 🔄 Order Flow
+
+```
+User
+
+↓
+
+Restaurant
+
+↓
+
+Food
+
+↓
+
+Cart
+
+↓
+
+Place Order
+
+↓
+
+Order
+
+↓
+
+Order Items
+```
+
+---
+
+## 🛠 Technologies Used
+
+- ASP.NET Core 8 Web API
+- C#
+- Entity Framework Core
+- MySQL
+- Repository Pattern
+- DTO
+- JWT Authentication
+- LINQ
+- Swagger
+
+---
+
+## 📈 Project Progress
+
+- ✅ Day 1 – Project Setup
+- ✅ Day 2 – JWT Authentication
+- ✅ Day 3 – Repository Pattern
+- ✅ Day 4 – Food Module
+- ✅ Day 5 – Cart Module
+- ✅ Day 6 – Order Module
+
+**Overall Progress:** **60% Complete**
