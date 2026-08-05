@@ -1,0 +1,518 @@
+# MySQL Stored Procedures - Complete Notes
+
+A beginner to advanced guide to MySQL Stored Procedures with syntax, examples, interview questions, and practice.
+
+---
+
+# Table of Contents
+
+1. What is a Stored Procedure?
+2. Advantages
+3. Syntax
+4. Create Procedure
+5. Call Procedure
+6. Procedure with Parameters
+7. INSERT Procedure
+8. UPDATE Procedure
+9. DELETE Procedure
+10. SELECT Procedure
+11. IF ELSE Procedure
+12. CRUD Procedure
+13. Interview Questions
+14. Practice Questions
+
+---
+
+# What is a Stored Procedure?
+
+A Stored Procedure is a collection of SQL statements stored inside the database. It can be executed whenever required.
+
+It improves:
+- Performance
+- Code Reusability
+- Security
+- Maintainability
+
+---
+
+# Basic Syntax
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE ProcedureName()
+BEGIN
+
+    SQL Statements;
+
+END $$
+
+DELIMITER ;
+```
+
+---
+
+# Execute Procedure
+
+```sql
+CALL ProcedureName();
+```
+
+---
+
+# Example
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE GetStudents()
+BEGIN
+
+    SELECT * FROM Student;
+
+END $$
+
+DELIMITER ;
+```
+
+Execute
+
+```sql
+CALL GetStudents();
+```
+
+---
+
+# Procedure with IN Parameter
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE GetStudentById
+(
+    IN pId INT
+)
+BEGIN
+
+    SELECT *
+    FROM Student
+    WHERE Id = pId;
+
+END $$
+
+DELIMITER ;
+```
+
+Execute
+
+```sql
+CALL GetStudentById(2);
+```
+
+---
+
+# INSERT Procedure
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE InsertStudent
+(
+    IN pName VARCHAR(100),
+    IN pAge INT,
+    IN pScore INT
+)
+BEGIN
+
+    INSERT INTO Student(Name,Age,Score)
+    VALUES(pName,pAge,pScore);
+
+END $$
+
+DELIMITER ;
+```
+
+Execute
+
+```sql
+CALL InsertStudent('Rahul',22,90);
+```
+
+---
+
+# UPDATE Procedure
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE UpdateStudent
+(
+    IN pId INT,
+    IN pName VARCHAR(100),
+    IN pScore INT
+)
+BEGIN
+
+    UPDATE Student
+    SET
+        Name = pName,
+        Score = pScore
+    WHERE Id = pId;
+
+END $$
+
+DELIMITER ;
+```
+
+Execute
+
+```sql
+CALL UpdateStudent(1,'Ruturaj',98);
+```
+
+---
+
+# DELETE Procedure
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE DeleteStudent
+(
+    IN pId INT
+)
+BEGIN
+
+    DELETE
+    FROM Student
+    WHERE Id = pId;
+
+END $$
+
+DELIMITER ;
+```
+
+Execute
+
+```sql
+CALL DeleteStudent(3);
+```
+
+---
+
+# SELECT Procedure
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE GetAllStudents()
+BEGIN
+
+    SELECT *
+    FROM Student;
+
+END $$
+
+DELIMITER ;
+```
+
+---
+
+# Procedure using IF ELSE
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE CheckMarks
+(
+    IN pMarks INT
+)
+BEGIN
+
+    IF pMarks >= 35 THEN
+
+        SELECT 'PASS' AS Result;
+
+    ELSE
+
+        SELECT 'FAIL' AS Result;
+
+    END IF;
+
+END $$
+
+DELIMITER ;
+```
+
+Execute
+
+```sql
+CALL CheckMarks(60);
+```
+
+Output
+
+```
+PASS
+```
+
+---
+
+# Common CRUD Procedure
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE ManageStudent
+(
+    IN pAction VARCHAR(20),
+    IN pId INT,
+    IN pName VARCHAR(100),
+    IN pAge INT,
+    IN pScore INT
+)
+BEGIN
+
+    IF pAction='INSERT' THEN
+
+        INSERT INTO Student(Name,Age,Score)
+        VALUES(pName,pAge,pScore);
+
+    ELSEIF pAction='UPDATE' THEN
+
+        UPDATE Student
+        SET
+            Name=pName,
+            Age=pAge,
+            Score=pScore
+        WHERE Id=pId;
+
+    ELSEIF pAction='DELETE' THEN
+
+        DELETE
+        FROM Student
+        WHERE Id=pId;
+
+    ELSE
+
+        SELECT 'Invalid Action' AS Message;
+
+    END IF;
+
+END $$
+
+DELIMITER ;
+```
+
+---
+
+## INSERT
+
+```sql
+CALL ManageStudent
+(
+'INSERT',
+0,
+'Rohan',
+22,
+95
+);
+```
+
+---
+
+## UPDATE
+
+```sql
+CALL ManageStudent
+(
+'UPDATE',
+1,
+'Ruturaj',
+24,
+99
+);
+```
+
+---
+
+## DELETE
+
+```sql
+CALL ManageStudent
+(
+'DELETE',
+1,
+'',
+0,
+0
+);
+```
+
+---
+
+# IN Parameter
+
+Input value comes from the caller.
+
+```sql
+IN pId INT
+```
+
+---
+
+# OUT Parameter
+
+Returns a value.
+
+Example
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE StudentCount
+(
+OUT Total INT
+)
+BEGIN
+
+SELECT COUNT(*)
+INTO Total
+FROM Student;
+
+END $$
+
+DELIMITER ;
+```
+
+Execute
+
+```sql
+CALL StudentCount(@Total);
+
+SELECT @Total;
+```
+
+---
+
+# INOUT Parameter
+
+Works as both input and output.
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE DoubleNumber
+(
+INOUT Num INT
+)
+BEGIN
+
+SET Num = Num * 2;
+
+END $$
+
+DELIMITER ;
+```
+
+Execute
+
+```sql
+SET @Num = 10;
+
+CALL DoubleNumber(@Num);
+
+SELECT @Num;
+```
+
+Output
+
+```
+20
+```
+
+---
+
+# Advantages
+
+- Better Performance
+- Reusable
+- Secure
+- Easy Maintenance
+- Reduced Network Traffic
+
+---
+
+# Disadvantages
+
+- Difficult Debugging
+- Database Dependent
+- Complex Procedures become difficult to maintain
+
+---
+
+# Interview Questions
+
+## 1. What is a Stored Procedure?
+
+A Stored Procedure is a precompiled collection of SQL statements stored inside the database.
+
+---
+
+## 2. Why do we use Stored Procedures?
+
+- Performance
+- Security
+- Reusability
+- Maintenance
+
+---
+
+## 3. Difference between Procedure and Function?
+
+| Procedure | Function |
+|------------|----------|
+| Can return multiple values | Returns one value |
+| Can use INSERT/UPDATE/DELETE | Mostly used for calculations |
+| Called using CALL | Used inside SELECT |
+
+---
+
+## 4. What are Parameter Types?
+
+- IN
+- OUT
+- INOUT
+
+---
+
+## 5. Why use DELIMITER?
+
+Because procedures contain multiple SQL statements ending with `;`. Changing the delimiter allows MySQL to treat the entire procedure as one statement.
+
+---
+
+# Practice Questions
+
+1. Create a procedure to insert a student.
+2. Create a procedure to update a student.
+3. Create a procedure to delete a student.
+4. Create a procedure to fetch all students.
+5. Create a procedure using IF ELSE.
+6. Create a procedure using CASE.
+7. Create a procedure with OUT parameter.
+8. Create a procedure with INOUT parameter.
+9. Create a common CRUD procedure.
+10. Create a procedure to return the total student count.
+
+---
+
+
+
+# Author
+
+**Ruturaj Choure**
+
+**.NET Full Stack Developer**
+
+⭐ Star this repository if you found it useful.
