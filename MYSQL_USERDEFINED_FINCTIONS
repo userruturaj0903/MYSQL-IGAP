@@ -1,0 +1,625 @@
+# MySQL Functions - Complete Notes
+
+A complete guide to MySQL User Defined Functions (UDF) for interview preparation.
+
+---
+
+# Table of Contents
+
+1. What is a Function?
+2. Advantages
+3. Function Syntax
+4. Create Function
+5. Execute Function
+6. String Functions
+7. Number Functions
+8. IF ELSE Function
+9. Interview Questions
+10. Practice Questions
+
+---
+
+# What is a Function?
+
+A Function is a database object that accepts input parameters and returns exactly one value.
+
+Unlike Stored Procedures, Functions are mainly used for calculations and formatting.
+
+---
+
+# Syntax
+
+```sql
+DELIMITER $$
+
+CREATE FUNCTION FunctionName(Parameter Datatype)
+RETURNS Datatype
+
+DETERMINISTIC
+
+BEGIN
+
+RETURN value;
+
+END $$
+
+DELIMITER ;
+```
+
+---
+
+# Execute Function
+
+```sql
+SELECT FunctionName(value);
+```
+
+---
+
+# Example 1
+
+Return Square of Number
+
+```sql
+DELIMITER $$
+
+CREATE FUNCTION SquareNumber(num INT)
+
+RETURNS INT
+
+DETERMINISTIC
+
+BEGIN
+
+RETURN num * num;
+
+END $$
+
+DELIMITER ;
+```
+
+Execute
+
+```sql
+SELECT SquareNumber(5);
+```
+
+Output
+
+```
+25
+```
+
+---
+
+# Example 2
+
+First Letter Capital
+
+```sql
+DELIMITER $$
+
+CREATE FUNCTION FirstLetterCapital(str VARCHAR(100))
+
+RETURNS VARCHAR(100)
+
+DETERMINISTIC
+
+BEGIN
+
+RETURN CONCAT(
+
+UPPER(LEFT(str,1)),
+
+LOWER(SUBSTRING(str,2))
+
+);
+
+END $$
+
+DELIMITER ;
+```
+
+Execute
+
+```sql
+SELECT FirstLetterCapital('ruturaj');
+```
+
+Output
+
+```
+Ruturaj
+```
+
+---
+
+# Example 3
+
+Upper Case
+
+```sql
+DELIMITER $$
+
+CREATE FUNCTION ToUpperCase(str VARCHAR(100))
+
+RETURNS VARCHAR(100)
+
+DETERMINISTIC
+
+BEGIN
+
+RETURN UPPER(str);
+
+END $$
+
+DELIMITER ;
+```
+
+Execute
+
+```sql
+SELECT ToUpperCase('ruturaj');
+```
+
+Output
+
+```
+RUTURAJ
+```
+
+---
+
+# Example 4
+
+Lower Case
+
+```sql
+DELIMITER $$
+
+CREATE FUNCTION ToLowerCase(str VARCHAR(100))
+
+RETURNS VARCHAR(100)
+
+DETERMINISTIC
+
+BEGIN
+
+RETURN LOWER(str);
+
+END $$
+
+DELIMITER ;
+```
+
+---
+
+# Example 5
+
+Reverse String
+
+```sql
+DELIMITER $$
+
+CREATE FUNCTION ReverseString(str VARCHAR(100))
+
+RETURNS VARCHAR(100)
+
+DETERMINISTIC
+
+BEGIN
+
+RETURN REVERSE(str);
+
+END $$
+
+DELIMITER ;
+```
+
+Execute
+
+```sql
+SELECT ReverseString('ruturaj');
+```
+
+Output
+
+```
+jaruturr
+```
+
+---
+
+# Example 6
+
+String Length
+
+```sql
+DELIMITER $$
+
+CREATE FUNCTION StringLength(str VARCHAR(100))
+
+RETURNS INT
+
+DETERMINISTIC
+
+BEGIN
+
+RETURN LENGTH(str);
+
+END $$
+
+DELIMITER ;
+```
+
+Execute
+
+```sql
+SELECT StringLength('Ruturaj');
+```
+
+Output
+
+```
+7
+```
+
+---
+
+# Example 7
+
+Even or Odd
+
+```sql
+DELIMITER $$
+
+CREATE FUNCTION EvenOdd(num INT)
+
+RETURNS VARCHAR(20)
+
+DETERMINISTIC
+
+BEGIN
+
+IF num % 2 = 0 THEN
+
+RETURN 'Even';
+
+ELSE
+
+RETURN 'Odd';
+
+END IF;
+
+END $$
+
+DELIMITER ;
+```
+
+Execute
+
+```sql
+SELECT EvenOdd(25);
+```
+
+Output
+
+```
+Odd
+```
+
+---
+
+# Example 8
+
+Maximum Number
+
+```sql
+DELIMITER $$
+
+CREATE FUNCTION MaximumNumber
+(
+a INT,
+b INT
+)
+
+RETURNS INT
+
+DETERMINISTIC
+
+BEGIN
+
+IF a>b THEN
+
+RETURN a;
+
+ELSE
+
+RETURN b;
+
+END IF;
+
+END $$
+
+DELIMITER ;
+```
+
+Execute
+
+```sql
+SELECT MaximumNumber(50,100);
+```
+
+Output
+
+```
+100
+```
+
+---
+
+# Example 9
+
+Grade Function
+
+```sql
+DELIMITER $$
+
+CREATE FUNCTION StudentGrade(marks INT)
+
+RETURNS VARCHAR(20)
+
+DETERMINISTIC
+
+BEGIN
+
+IF marks>=90 THEN
+
+RETURN 'A';
+
+ELSEIF marks>=75 THEN
+
+RETURN 'B';
+
+ELSEIF marks>=60 THEN
+
+RETURN 'C';
+
+ELSE
+
+RETURN 'Fail';
+
+END IF;
+
+END $$
+
+DELIMITER ;
+```
+
+Execute
+
+```sql
+SELECT StudentGrade(85);
+```
+
+Output
+
+```
+B
+```
+
+---
+
+# Example 10
+
+Factorial
+
+```sql
+DELIMITER $$
+
+CREATE FUNCTION Factorial(num INT)
+
+RETURNS BIGINT
+
+DETERMINISTIC
+
+BEGIN
+
+DECLARE i INT DEFAULT 1;
+
+DECLARE result BIGINT DEFAULT 1;
+
+WHILE i<=num DO
+
+SET result=result*i;
+
+SET i=i+1;
+
+END WHILE;
+
+RETURN result;
+
+END $$
+
+DELIMITER ;
+```
+
+Execute
+
+```sql
+SELECT Factorial(5);
+```
+
+Output
+
+```
+120
+```
+
+---
+
+# Function vs Procedure
+
+| Function | Procedure |
+|----------|-----------|
+| Returns one value | Can return multiple values |
+| Used inside SELECT | Called using CALL |
+| Mainly calculations | CRUD Operations |
+| Cannot have OUT parameter | Can have OUT parameter |
+
+---
+
+# Advantages
+
+- Reusable
+- Easy Maintenance
+- Improves Readability
+- Reduces Duplicate Logic
+- Can be used inside SELECT
+
+---
+
+# Disadvantages
+
+- Returns only one value
+- Not suitable for CRUD operations
+- Cannot return multiple result sets
+
+---
+
+# Interview Questions
+
+## 1. What is Function?
+
+A Function is a database object that accepts parameters and returns exactly one value.
+
+---
+
+## 2. Difference between Procedure and Function?
+
+Procedure performs operations.
+
+Function returns one value.
+
+---
+
+## 3. Can Function return multiple values?
+
+No.
+
+---
+
+## 4. How to call Function?
+
+```sql
+SELECT FunctionName();
+```
+
+---
+
+## 5. Why use DETERMINISTIC?
+
+It indicates that the function always returns the same output for the same input.
+
+---
+
+## 6. Can Function use INSERT?
+
+Generally, functions should not perform INSERT, UPDATE, or DELETE operations. They are intended to compute and return values.
+
+---
+
+## 7. Can Function call another Function?
+
+Yes.
+
+---
+
+## 8. Can Function contain IF ELSE?
+
+Yes.
+
+---
+
+## 9. Can Function contain WHILE loop?
+
+Yes.
+
+---
+
+## 10. Can Function return VARCHAR?
+
+Yes.
+
+---
+
+# Practice Questions
+
+1. Square Number
+2. Cube Number
+3. Reverse String
+4. First Letter Capital
+5. Upper Case
+6. Lower Case
+7. String Length
+8. Even Odd
+9. Prime Number
+10. Factorial
+11. Grade Calculator
+12. Maximum Number
+13. Minimum Number
+14. Remove Spaces
+15. Count Vowels
+16. Count Consonants
+17. Palindrome
+18. Leap Year
+19. Power Function
+20. Fibonacci Number
+
+---
+
+# Most Used String Functions
+
+```sql
+UPPER()
+
+LOWER()
+
+CONCAT()
+
+LEFT()
+
+RIGHT()
+
+SUBSTRING()
+
+LENGTH()
+
+REPLACE()
+
+REVERSE()
+
+TRIM()
+
+LTRIM()
+
+RTRIM()
+
+LOCATE()
+
+INSTR()
+
+SUBSTRING_INDEX()
+```
+
+---
+
+---
+
+# Author
+
+**Ruturaj Choure**
+
+**.NET Full Stack Developer**
+
+⭐ Star this repository if you found it useful.
