@@ -1,0 +1,201 @@
+A Trigger is a database object that automatically executes when an INSERT, UPDATE, or DELETE event occurs on a table.
+
+1. Basic Syntax
+DELIMITER $$
+
+CREATE TRIGGER trigger_name
+AFTER INSERT
+ON table_name
+FOR EACH ROW
+BEGIN
+
+    -- SQL statements
+
+END $$
+
+DELIMITER ;
+2. Trigger Types
+Trigger	Executes
+BEFORE INSERT	Before inserting a row
+AFTER INSERT	After inserting a row
+BEFORE UPDATE	Before updating a row
+AFTER UPDATE	After updating a row
+BEFORE DELETE	Before deleting a row
+AFTER DELETE	After deleting a row
+3. NEW and OLD
+NEW
+
+Represents the new value.
+
+NEW.name
+NEW.balance
+OLD
+
+Represents the previous value.
+
+OLD.name
+OLD.balance
+Remember
+INSERT  → NEW
+UPDATE  → OLD + NEW
+DELETE  → OLD
+4. AFTER INSERT Trigger
+Accounts Table
+CREATE TABLE accounts
+(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    balance DECIMAL(10,2)
+);
+Activities Table
+CREATE TABLE activities
+(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    adatetime DATETIME,
+    activity TEXT
+);
+Create Trigger
+DELIMITER $$
+
+CREATE TRIGGER account_after_insert
+AFTER INSERT
+ON accounts
+FOR EACH ROW
+BEGIN
+
+    INSERT INTO activities(adatetime, activity)
+    VALUES
+    (
+        NOW(),
+        CONCAT('New account created: ', NEW.name)
+    );
+
+END $$
+
+DELIMITER ;
+Insert Account
+INSERT INTO accounts(name, balance)
+VALUES ('Ruturaj', 5000);
+
+The trigger automatically creates:
+
+New account created: Ruturaj
+
+in the activities table.
+
+5. AFTER UPDATE Trigger
+DELIMITER $$
+
+CREATE TRIGGER account_after_update
+AFTER UPDATE
+ON accounts
+FOR EACH ROW
+BEGIN
+
+    INSERT INTO activities(adatetime, activity)
+    VALUES
+    (
+        NOW(),
+        CONCAT(
+            'Account updated: ',
+            OLD.name,
+            ' Balance: ',
+            OLD.balance,
+            ' -> ',
+            NEW.balance
+        )
+    );
+
+END $$
+
+DELIMITER ;
+
+Example:
+
+UPDATE accounts
+SET balance = 7000
+WHERE id = 1;
+
+Activity:
+
+Account updated: Ruturaj Balance: 5000 -> 7000
+6. AFTER DELETE Trigger
+DELIMITER $$
+
+CREATE TRIGGER account_after_delete
+AFTER DELETE
+ON accounts
+FOR EACH ROW
+BEGIN
+
+    INSERT INTO activities(adatetime, activity)
+    VALUES
+    (
+        NOW(),
+        CONCAT('Account deleted: ', OLD.name)
+    );
+
+END $$
+
+DELIMITER ;
+7. BEFORE INSERT Trigger
+DELIMITER $$
+
+CREATE TRIGGER account_before_insert
+BEFORE INSERT
+ON accounts
+FOR EACH ROW
+BEGIN
+
+    SET NEW.name = UPPER(NEW.name);
+
+END $$
+
+DELIMITER ;
+
+Now:
+
+INSERT INTO accounts(name, balance)
+VALUES ('ruturaj', 5000);
+
+The name will be stored as:
+
+RUTURAJ
+8. BEFORE UPDATE Trigger
+DELIMITER $$
+
+CREATE TRIGGER account_before_update
+BEFORE UPDATE
+ON accounts
+FOR EACH ROW
+BEGIN
+
+    SET NEW.name = UPPER(NEW.name);
+
+END $$
+
+DELIMITER ;
+9. Show Triggers
+SHOW TRIGGERS;
+10. Delete a Trigger
+DROP TRIGGER account_after_insert;
+11. Why Use Triggers?
+
+Common uses:
+
+Auditing
+Activity logging
+Automatic validation
+Maintaining related data
+Automatically recording changes
+12. FOR EACH ROW
+FOR EACH ROW
+
+means the trigger executes once for every affected row.
+
+13. Trigger vs Stored Procedure
+Trigger	Stored Procedure
+Executes automatically	Called manually
+Associated with table event	Independent object
+Triggered by INSERT/UPDATE/DELETE	Called using CALL
+Useful for auditing	Useful for business operations
